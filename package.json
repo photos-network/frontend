@@ -2,7 +2,7 @@
 	"name": "photos-network-frontend",
 	"description": "Photos.network front-end",
 	"version": "0.0.1",
-	"author": "Tom",
+	"author": "Photos.network",
 	"scripts": {
 		"start": "gulp",
 		"build": "gulp build --prod"
