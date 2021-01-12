@@ -1,0 +1,63 @@
+:root {
+	--color-highlight: #14789f;
+	--color-accent: #ffa500;
+	--color-info: #666d7b;
+	--color-success: #408062;
+	--color-danger: #8b4848;
+	--animation-speed: 0.2s;
+	--item-size: 220px;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-border: #000;
+		--color-background: #333;
+		--color-background-semi: #222c;
+		--color-background-alt: #444;
+		--color-text: #fff;
+		--color-text-dimmed: #ccc;
+		--color-warning: #af8a1a;
+	}
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		--color-border: #aaa;
+		--color-background: #eee;
+		--color-background-semi: #fffc;
+		--color-background-alt: #ccc;
+		--color-text: #111;
+		--color-text-dimmed: #444;
+		--color-warning: #764c00;
+	}
+}
+
+html,
+body { margin: 0; padding: 0; }
+html { height: 100%; width: 100%; }
+body {
+	font: 13px sans-serif;
+	background: var(--color-background);
+	color: var(--color-text);
+	user-select: none;
+	box-sizing: border-box;
+	padding-bottom: 20px;
+}
+
+body * { box-sizing: inherit; }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 { margin: 0; font-weight: normal; line-height: 1; }
+h1 { font-size: 24px; font-weight: 400; }
+h2 { font-size: 17px; font-weight: 300; }
+
+p { line-height: 1.4; }
+p.success { color: var(--color-success); }
+p.warning { color: var(--color-warning); }
+p.danger { color: var(--color-danger); }
+
+.flex-spacer { flex: 1; }

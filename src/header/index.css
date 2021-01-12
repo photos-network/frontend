@@ -1,0 +1,26 @@
+header {
+	height: 60px;
+	margin: 0;
+	padding: 0 20px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: var(--color-background-semi);
+	border-bottom: 1px solid var(--color-border);
+	color: var(--color-text-dimmed);
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	backdrop-filter: blur(10px);
+}
+
+header h1 { font-weight: 100; }
+
+header .icon-btn { margin: 0 20px; }
+
+header .icon-calendar { mask-image: url('assets/calendar.svg'); }
+header .icon-book     { mask-image: url('assets/book.svg');     }
+header .icon-folders  { mask-image: url('assets/folders.svg');  }
+header .icon-map      { mask-image: url('assets/map.svg');      }
+header .icon-shared   { mask-image: url('assets/shared.svg');    }
+header .icon-search   { mask-image: url('assets/search.svg');  margin-right: 0; }

@@ -1,0 +1,43 @@
+.media-item {
+	background: var(--color-background-semi);
+	width: auto;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	cursor: pointer;
+	--max-offset: 60px;
+}
+
+.media-item img {
+	object-fit: cover;
+	margin: auto;
+	max-height: calc(var(--item-size) + var(--max-offset));
+	margin-top: calc(var(--max-offset) * -1);
+	transform: translateY(var(--scroll-offset, 0));
+}
+
+.media-item.video:not(.loading)::after {
+	content: ' ';
+	display: block;
+	width: 84px;
+	height: 84px;
+	border-radius: 50%;
+	position: absolute;
+	background: #fff6 url('assets/play.svg') center no-repeat;
+	backdrop-filter: blur(5px);
+	background-size: 60px;
+	box-shadow: 0 0 3px 1px #fff6;
+	opacity: 0.7;
+}
+
+.media-item.loading::after {
+	content: ' ';
+	display: block;
+	position: absolute;
+	/* for some reason firefox is freezing with these... */
+	width: 84px;
+	height: 84px;
+	background:url('assets/puff.svg') center no-repeat;
+}
