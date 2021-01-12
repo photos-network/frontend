@@ -9,5 +9,22 @@ header {
 	border-bottom: 1px solid var(--color-border);
 	position: sticky;
 	top: 0;
+	z-index: 10;
 	backdrop-filter: blur(10px);
 }
+
+header h1 { font-weight: 100; opacity: 0.7; }
+
+header .icon-btn {
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	margin: 0 20px;
+}
+
+header .icon-calendar { background-image: url('assets/calendar.svg'); }
+header .icon-book     { background-image: url('assets/book.svg');     }
+header .icon-folders  { background-image: url('assets/folders.svg');  }
+header .icon-map      { background-image: url('assets/map.svg');      }
+header .icon-share    { background-image: url('assets/share.svg');    }
+header .icon-search   { background-image: url('assets/search.svg');  margin-right: 0; }

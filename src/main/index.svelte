@@ -2,9 +2,9 @@
 
 <main class="main">
 	{#if $initialised}
-		{#if $items}
-			{#each $items as item}
-				<img class="media-item" src="{item.path}" alt="{item.name}">
+		{#if $groups}
+			{#each $groups as group}
+				<MediaGroup group="{group}" />
 			{/each}
 		{:else}
 			Add some photos
@@ -16,7 +16,8 @@
 
 
 <script>
-import { initialised, items } from '../lib';
+import MediaGroup from '../media-group';
+import { initialised, groups } from '../lib';
 
 function onpopstate (e) {
 	if (e.state) console.log(e.state.id);

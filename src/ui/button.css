@@ -1,0 +1,64 @@
+.btn {
+	font: inherit;
+	font-size: 15px;
+	line-height: 1.4;
+	display: inline-block;
+	padding: 5px 15px;
+	min-width: 34px;
+	min-height: 34px;
+	margin-bottom: 0;
+	font-weight: 300;
+	height: auto;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	text-decoration: none;
+	cursor: pointer;
+	border: 1px solid transparent;
+	border-radius: 3px;
+	user-select: none;
+	box-shadow: 0 1px 0 rgba(0,0,0,0.8);
+	color: var(--color-text);
+	background: var(--color-info);
+	transition: background-color var(--animation-speed) ease-out, border-color var(--animation-speed) ease-out, box-shadow var(--animation-speed) ease-out;
+}
+.btn:focus {
+	border-color: var(--color-accent);
+	box-shadow: 0 0 2px 1px var(--color-accent);
+	outline: 0;
+}
+.btn:active {
+	outline: 0;
+	box-shadow: none;
+	transform: translateY(1px);
+	filter: brightness(0.85);
+}
+.btn.success { background: var(--color-success); }
+.btn.warning { background: var(--color-warning); }
+.btn.danger { background: var(--color-danger); }
+
+
+.icon-btn {
+	height: 32px;
+	width: 32px;
+	border: 1px solid transparent;
+	background: none;
+	text-align: center;
+	cursor: pointer;
+	z-index: 10;
+	display: inline-block;
+	transition: opacity var(--animation-speed) ease-out, transform var(--animation-speed) ease-out;
+	opacity: 0.7;
+	color: var(--color-text);
+	filter: drop-shadow(0 1px 1px var(--color-border));
+}
+
+.icon-btn:focus {
+	border-color: var(--color-accent);
+	box-shadow: 0 0 2px 1px var(--color-accent);
+	opacity: 1;
+	outline: 0;
+}
+
+.icon-btn:hover { opacity: 1; transform: scale(1.1); }
+.icon-btn:active { opacity: 0.7; transform: scale(1.04); }
