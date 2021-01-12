@@ -1,6 +1,9 @@
 nav {
 	margin: 0;
+	padding: 10px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 }
+
+nav .icon-btn { margin: 0 20px; }

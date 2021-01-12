@@ -39,20 +39,17 @@
 
 
 .icon-btn {
-	height: 32px;
-	width: 32px;
 	border: 1px solid transparent;
 	background: none;
 	text-align: center;
+	padding: 2px 2px 0;
 	cursor: pointer;
 	z-index: 10;
 	display: inline-block;
-	mask-size: cover;
-	mask-position: center;
-	mask-repeat: no-repeat;
-	transition: background-color var(--animation-speed) ease-out, transform .05s ease-out;
+	transition: color var(--animation-speed) ease-out, transform .05s ease-out;
 	filter: drop-shadow(0 1px 1px var(--color-border));
-	background-color: var(--color-text-dimmed);
+	color: var(--color-text-dimmed);
+	border-radius: 6px;
 }
 
 .icon-btn:focus {
@@ -61,5 +58,5 @@
 	outline: 0;
 }
 
-.icon-btn:hover { transform: scale(1.1); background-color: var(--color-text); }
-.icon-btn:active { transform: scale(1.04); background-color: var(--color-text-dimmed); }
+.icon-btn:hover { transform: scale(1.1); color: var(--color-text); }
+.icon-btn:active { transform: scale(1.04); color: var(--color-text-dimmed); }
