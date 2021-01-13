@@ -41,9 +41,23 @@ function fuzzy (hay = '', s = '') {
 }
 
 
+function inView (elem, cb = () => {}) {
+	const options = { rootMargin: '200px', threshold: 1.0 };
+	const observer = new IntersectionObserver(([entry]) => {
+		if (entry.intersectionRatio > 0.9) {
+			observer.unobserve(entry.target);
+			cb();
+		}
+	}, options);
+	observer.observe(elem);
+}
+
+
+
 export {
 	animate,
 	clone,
 	copyToClipboard,
 	fuzzy,
+	inView,
 };

@@ -5,26 +5,18 @@
 
 <script>
 import { onMount } from 'svelte';
+import { inView } from '../lib';
 export let src = { src: '', name: 'Loading...', type: 'photo' };
 
 let loading = false;
 let el, img;
 
 onMount(() => {
-	const options = { rootMargin: '300px', threshold: 1.0 };
-	const observer = new IntersectionObserver(entries => {
-		entries.forEach(entry => {
-			if (entry.intersectionRatio > 0.9) {
-				loading = true;
-				observer.unobserve(entry.target);
-				img.src = src.thumb || src.path || '#';
-				img.onload = () => setTimeout(() => loading = false, 500);
-			}
-		});
-	}, options);
-	observer.observe(el);
+	inView(el, () => {
+		loading = true;
+		img.src = src.thumb || src.path || '#';
+		img.onload = () => requestAnimationFrame(() => loading = false);
+	});
 });
-
-
 
 </script>

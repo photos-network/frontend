@@ -5,7 +5,6 @@
 	--color-success: #408062;
 	--color-danger: #8b4848;
 	--animation-speed: 0.2s;
-	--item-size: 220px;
 }
 
 @media (prefers-color-scheme: dark) {

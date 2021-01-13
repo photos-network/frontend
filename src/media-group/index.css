@@ -1,3 +1,7 @@
+:root {
+	--max-offset: 60px;
+	--item-size: 220px;
+}
 
 .media-group-title {
     font-size: 24px;
