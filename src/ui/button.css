@@ -22,7 +22,7 @@
 	background: var(--color-info);
 	transition: background-color var(--animation-speed) ease-out, border-color var(--animation-speed) ease-out, box-shadow var(--animation-speed) ease-out;
 }
-.btn:focus {
+.btn:focus-visible {
 	border-color: var(--color-accent);
 	box-shadow: 0 0 2px 1px var(--color-accent);
 	outline: 0;
@@ -52,7 +52,7 @@
 	border-radius: 6px;
 }
 
-.icon-btn:focus {
+.icon-btn:focus-visible {
 	border-color: var(--color-accent);
 	box-shadow: 0 0 2px 1px var(--color-accent);
 	outline: 0;

@@ -24,12 +24,12 @@ input[type="color"]:disabled,
 input[type="number"]:disabled { opacity: 0.5; }
 
 
-.select-wrap:focus,
-textarea:focus,
-input[type=text]:focus,
-input[type=search]:focus,
-input[type="color"]:focus,
-input[type="number"]:focus,
+.select-wrap:focus-visible,
+textarea:focus-visible,
+input[type=text]:focus-visible,
+input[type=search]:focus-visible,
+input[type="color"]:focus-visible,
+input[type="number"]:focus-visible,
 .select-wrap:focus-within,
 textarea:focus-within,
 input[type=text]:focus-within,
@@ -84,7 +84,7 @@ select {
 	appearance: none;
 }
 
-select:focus { outline: 0; }
+select:focus-visible { outline: 0; }
 
 
 textarea,
