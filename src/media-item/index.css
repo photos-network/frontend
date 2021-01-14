@@ -7,12 +7,14 @@
 	justify-content: center;
 	position: relative;
 	cursor: pointer;
+	border-radius: 10px;
 }
 
 .media-item img {
 	object-fit: cover;
 	margin: auto;
-	max-height: calc(var(--item-size) + var(--max-offset));
+	height: calc(var(--item-size) + var(--max-offset));
+	width: 100%;
 	margin-top: calc(var(--max-offset) * -1);
 	transform: translateY(var(--scroll-offset, 0));
 }
@@ -35,7 +37,7 @@
 	content: ' ';
 	display: block;
 	position: absolute;
-	/* for some reason firefox is freezing with these... */
+	/* for some reason firefox is freezing with a lot of these... */
 	width: 84px;
 	height: 84px;
 	background:url('assets/puff.svg') center no-repeat;

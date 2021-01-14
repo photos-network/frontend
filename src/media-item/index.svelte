@@ -1,11 +1,14 @@
-<div class="media-item {src.type || 'photo'}" class:loading="{loading}" bind:this="{el}" >
+<div class="media-item {src.type || 'photo'}"
+		class:loading="{loading}"
+		bind:this="{el}"
+		on:click="{viewItem}">
 	<img bind:this="{img}" src="#" alt="{src.name || ''}">
 </div>
 
 
 <script>
 import { onMount } from 'svelte';
-import { inView } from '../lib';
+import { EVENT, inView } from '../lib';
 export let src = { src: '', name: 'Loading...', type: 'photo' };
 
 let loading = false;
@@ -18,5 +21,10 @@ onMount(() => {
 		img.onload = () => requestAnimationFrame(() => loading = false);
 	});
 });
+
+
+function viewItem () {
+	EVENT.fire(EVENT.item.view, src, el);
+}
 
 </script>

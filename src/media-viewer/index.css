@@ -1,0 +1,27 @@
+.media-viewer {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: #111;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	z-index: 99;
+	display: none;
+}
+
+.media-viewer-img-wrap {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.media-viewer img {
+	height: 100%;
+	width: 100%;
+	object-fit: contain;
+}

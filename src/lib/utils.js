@@ -1,6 +1,6 @@
 
 function animate (el, from, to, _options = {}) {
-	const dflt = {duration: 300, easing: 'ease-out', fill: 'forwards'};
+	const dflt = {duration: 200, easing: 'ease-out', fill: 'forwards'};
 	const opts = Object.assign({}, dflt, _options);
 
 	return new Promise(resolve => {
@@ -41,6 +41,17 @@ function fuzzy (hay = '', s = '') {
 }
 
 
+function getBox (el) {
+	const {left, top, width, height} = el.getBoundingClientRect();
+	return {
+		left: left + 'px',
+		top: top + 'px',
+		width: width + 'px',
+		height: height + 'px',
+	};
+}
+
+
 function inView (elem, cb = () => {}) {
 	const options = { rootMargin: '200px', threshold: 1.0 };
 	const observer = new IntersectionObserver(([entry]) => {
@@ -59,5 +70,6 @@ export {
 	clone,
 	copyToClipboard,
 	fuzzy,
+	getBox,
 	inView,
 };
