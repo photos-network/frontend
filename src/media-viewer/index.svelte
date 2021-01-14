@@ -10,7 +10,7 @@ import { EVENT, animate, getBox } from '../lib';
 
 let item = { src: '', name: '', type: 'photo' };
 let el, img, targetBox;
-const fullScreen = { left: 0, top: 0, width: '100%', height: '100%' };
+const fullScreen = { left: 0, top: 0, width: '100%', height: '100%', backgroundColor: '#111' };
 
 onMount(() => {
 	EVENT.on(EVENT.item.view, open);
@@ -20,7 +20,7 @@ onMount(() => {
 function open (_item, clickedEl) {
 	document.documentElement.style.overflow = 'hidden';
 	item = _item;
-	targetBox = getBox(clickedEl);
+	targetBox = Object.assign(getBox(clickedEl), { backgroundColor: 'transparent' });
 	Object.assign(el.style, targetBox, { display: 'block' });
 
 	let full = new Image();
