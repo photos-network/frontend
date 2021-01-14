@@ -29,10 +29,12 @@ function open (_item, clickedEl) {
 		const itemPath = document.querySelector('.media-viewer')?.dataset?.itemPath;
 		if (full.src.includes(itemPath)) img.src = full.src;
 	};
-	animate(el, targetBox, fullScreen).then(() => full.src = _item.path);
+	animate(el, targetBox, fullScreen)
+		.then(() => full.src = _item.path);
 }
 
 function close () {
+	img.src = item.thumb; // for smoother animation
 	animate(el, fullScreen, targetBox)
 		.then(() => {
 			el.style.display = 'none';

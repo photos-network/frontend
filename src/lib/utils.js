@@ -1,12 +1,14 @@
 
 function animate (el, from, to, _options = {}) {
-	const dflt = {duration: 200, easing: 'ease-out', fill: 'forwards'};
+	const dflt = {duration: 250, easing: 'ease-out', fill: 'forwards'};
 	const opts = Object.assign({}, dflt, _options);
 
 	return new Promise(resolve => {
-		const anim = el.animate([from, to], opts);
-		anim.oncancel = resolve;
-		anim.onfinish = resolve;
+		requestAnimationFrame(() => {
+			const anim = el.animate([from, to], opts);
+			anim.oncancel = resolve;
+			anim.onfinish = resolve;
+		});
 	});
 }
 
