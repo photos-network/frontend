@@ -1,5 +1,13 @@
 <div class="media-viewer" bind:this="{el}" on:click="{close}" data-item-path="{item.path}">
-	<a href="#prev" class="icon-btn btn-prev" title="Previous"
+	<a href="#prev" class="icon-btn btn-close" title="Close (Esc)"
+		on:click|preventDefault|stopPropagation="{close}">
+		<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="84" height="84" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+			<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+			<line x1="18" y1="6" x2="6" y2="18" />
+			<line x1="6" y1="6" x2="18" y2="18" />
+		</svg>
+	</a>
+	<a href="#prev" class="icon-btn btn-prev" title="Previous (←)"
 		on:click|preventDefault|stopPropagation="{prev}">
 		<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="84" height="84" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
 			<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -13,7 +21,7 @@
 		<img src="{item.thumb}" alt="{item.name || ''}" bind:this="{img}">
 	</div>
 
-	<a href="#next" class="icon-btn btn-next" title="Next"
+	<a href="#next" class="icon-btn btn-next" title="Next (→)"
 		on:click|preventDefault|stopPropagation="{next}">
 		<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-right" width="84" height="84" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
 			<path stroke="none" d="M0 0h24v24H0z" fill="none"/>

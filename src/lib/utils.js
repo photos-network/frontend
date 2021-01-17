@@ -1,6 +1,6 @@
-
+// native js animation
 function animate (el, from, to, _options = {}) {
-	const dflt = {duration: 250, easing: 'ease-out', fill: 'forwards'};
+	const dflt = {duration: 200, easing: 'ease-out', fill: 'forwards'};
 	const opts = Object.assign({}, dflt, _options);
 
 	return new Promise(resolve => {
