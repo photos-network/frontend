@@ -1,9 +1,10 @@
-<div class="media-item {src.type || 'photo'}"
+<a href="#{src.path}" class="media-item {src.type || 'photo'}"
 		class:loading="{loading}"
 		bind:this="{el}"
-		on:click="{viewItem}">
+		on:click|preventDefault="{viewItem}"
+		id="{src.path}">
 	<img bind:this="{img}" src="#" alt="{src.name || ''}">
-</div>
+</a>
 
 
 <script>

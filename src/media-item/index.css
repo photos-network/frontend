@@ -1,5 +1,6 @@
 .media-item {
 	background: var(--color-background-semi);
+	border: 1px solid transparent;
 	width: auto;
 	overflow: hidden;
 	display: flex;
@@ -9,6 +10,13 @@
 	cursor: pointer;
 	border-radius: 10px;
 }
+
+.media-item:focus-visible {
+	border-color: var(--color-accent);
+	box-shadow: 0 0 2px 1px var(--color-accent);
+	outline: 0;
+}
+
 
 .media-item img {
 	object-fit: cover;
