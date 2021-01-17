@@ -4,13 +4,18 @@
 	right: 0;
 	top: 0;
 	bottom: 0;
-	background-color: transparent;
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
 	z-index: 99;
 	display: none;
 }
+
+.media-viewer .icon-btn {
+	position: absolute;
+	top: 48%;
+	border-radius: 50%;
+}
+
+.btn-prev { left: 10px; }
+.btn-next { right: 10px; }
 
 .media-viewer-img-wrap {
 	width: 100%;

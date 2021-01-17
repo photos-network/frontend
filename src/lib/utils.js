@@ -44,7 +44,9 @@ function fuzzy (hay = '', s = '') {
 
 
 function getBox (el) {
-	const {left, top, width, height} = el.getBoundingClientRect();
+	const docEl = document.documentElement;
+	const {left, top, width, height} = el?.getBoundingClientRect() ||
+		{ left: docEl.offsetWidth / 2, top: docEl.offsetHeight / 2, width: 0, height: 0 };
 	return {
 		left: left + 'px',
 		top: top + 'px',
@@ -66,6 +68,10 @@ function inView (elem, cb = () => {}) {
 }
 
 
+function sortBy (items, field = 'date_taken') {
+	return items.sort((a, b) => a[field] - b[field]);
+}
+
 
 export {
 	animate,
@@ -74,4 +80,5 @@ export {
 	fuzzy,
 	getBox,
 	inView,
+	sortBy,
 };

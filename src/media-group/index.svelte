@@ -17,6 +17,7 @@ import { onMount } from 'svelte';
 import * as basicScroll from 'basicscroll';
 
 onMount(() => {
+	// create parallax/depth effect on photos (scroll them slower than the page)
 	const instance = basicScroll.create({
 		elem,
 		from: 'top-bottom',
