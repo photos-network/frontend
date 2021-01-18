@@ -12,7 +12,7 @@
       "stopOnEntry": false,
       "sourceMaps": true,
       "outFiles": [
-        "${workspaceRoot}/packkages/svelte-vscode/dist/**/*.js"
+        "${workspaceRoot}/packages/svelte-vscode/dist/**/*.js"
       ],
       "preLaunchTask": "npm: watch"
     },
