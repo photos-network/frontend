@@ -12,12 +12,20 @@ Its core features are:
  - Group photos by objects like people of objects
 
 ## Frontend
-This is the repository for the official App-like web frontend.
+This repository contains the official App-like web frontend.
 
-## Development
+### Visual Studio Code
+The fastest start into development can be archived by using [Visual Studio Code](https://code.visualstudio.com/) and [Docker](https://www.docker.com/get-started).
+
+1. Install [Docker](https://www.docker.com/get-started)
+2. Install [Visual Studio Code](https://code.visualstudio.com/)
+3. Install [Visual Studio Code Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+4. Clone and Open this repository in Visual Studio Code
+5. Click the "Reopen in Container" Dialog
+6. Press `F5` to run the application inside the container
+
+### Manual Environment
 ```sh
-git clone https://github.com/photos-network/frontend.git
-cd frontend
 npm i
 npm start
 ```
