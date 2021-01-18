@@ -1,0 +1,19 @@
+{
+	"name": "Photos.network Frontend",
+	"build": {
+		"dockerfile": "Dockerfile",
+	},
+  
+  "appPort": 3000,
+  "postCreateCommand": "npm i",
+
+	"settings": { 
+		"terminal.integrated.shell.linux": "/bin/bash"
+	},
+
+  "extensions": [
+		"dbaeumer.vscode-eslint"
+	],
+
+	"remoteUser": "node"
+}
