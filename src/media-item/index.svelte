@@ -2,6 +2,7 @@
 		class:loading="{loading}"
 		bind:this="{el}"
 		on:click|preventDefault="{viewItem}"
+		on:focus="{onfocus}"
 		id="{src.path}">
 	<img bind:this="{img}" src="#" alt="{src.name || ''}">
 </a>
@@ -26,6 +27,11 @@ onMount(() => {
 
 function viewItem () {
 	EVENT.fire(EVENT.item.view, src, el);
+}
+
+
+function onfocus (e) {
+	e.target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
 }
 
 </script>

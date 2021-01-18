@@ -4,10 +4,13 @@
 }
 
 .media-group-title {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 100;
     padding: 40px 0 10px;
 }
+
+.media-group-title:first-of-type { padding-top: 10px; }
+
 
 .media-group {
     display: grid;

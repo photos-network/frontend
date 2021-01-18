@@ -1,5 +1,6 @@
 :root {
 	--color-highlight: #14789f;
+	--color-highlight-semi: #14789f33;
 	--color-accent: #ffa500;
 	--color-info: #666d7b;
 	--color-success: #408062;
@@ -51,8 +52,6 @@ h3,
 h4,
 h5,
 h6 { margin: 0; font-weight: normal; line-height: 1; }
-h1 { font-size: 24px; font-weight: 400; }
-h2 { font-size: 17px; font-weight: 300; }
 
 p { line-height: 1.4; }
 p.success { color: var(--color-success); }

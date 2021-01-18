@@ -5,10 +5,16 @@ export const EVENT = {
 	fire,
 
 	app: {
-		started: 'app-started'
+		started: 'app-started',
 	},
 	item: {
-		view: 'item-view'
+		view: 'item-view',
+		close: 'item-close',
+		prev: 'item-prev',
+		next: 'item-next',
+	},
+	info: {
+		toggle: 'info-panel-toggle',
 	},
 	document: {
 		clicked: 'document-clicked',

@@ -8,13 +8,21 @@
 	display: none;
 }
 
-.media-viewer .icon-btn {
+.media-viewer-menu {
 	position: absolute;
-	top: 48%;
-	border-radius: 50%;
+	top: 10px;
+	left: 0;
+	right: 0;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
-.media-viewer .btn-close { top: 10px; right: 10px; }
+.media-viewer-menu .icon-btn { margin: 0 10px; }
+
+.media-viewer .btn-prev,
+.media-viewer .btn-next  { position: absolute; top: calc(50% - 30px); width: 60px; height: 60px; }
+
 .media-viewer .btn-prev { left: 10px; }
 .media-viewer .btn-next { right: 10px; }
 
@@ -26,8 +34,4 @@
 	justify-content: center;
 }
 
-.media-viewer img {
-	height: 100%;
-	width: 100%;
-	object-fit: contain;
-}
+.media-viewer img { height: 100%; width: 100%; object-fit: contain; }
