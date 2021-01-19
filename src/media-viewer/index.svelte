@@ -1,23 +1,28 @@
-<div class="media-viewer" bind:this="{el}" data-item-path="{item.path}">
+<div class="media-viewer" bind:this="{el}" on:click="{close}" data-item-path="{item.path}">
 	<Menu {isOpen} />
 	<div class="media-viewer-img-wrap">
+		<BtnPrev />
 		<img src="{item.thumb}" alt="{item.name || ''}" bind:this="{img}">
+		<BtnNext />
 	</div>
+	<InfoPanel item="{item}"/>
 </div>
 
 <script>
 import { onMount } from 'svelte';
 import Menu from './menu';
-import { EVENT, animate, getBox, items } from '../lib';
+import InfoPanel from './info-panel';
+import BtnPrev from './btn-prev';
+import BtnNext from './btn-next';
+import { EVENT, animate, getBoxCenter, items } from '../lib';
 
 let item = { src: '', name: '', type: 'photo' };
 let el, img, mediaItemElements, isOpen = false;
-const fullScreen = { left: 0, top: 0, width: '100%', height: '100%', backgroundColor: '#111' };
-
+const thumbProps = { scale: 0.1, opacity: 0 };
+const fullScreenProps = { scale: 1, opacity: 1 };
 
 onMount(() => {
 	mediaItemElements = document.querySelectorAll('.main .media-item');
-	console.log(123);
 	EVENT.on(EVENT.item.view, open);
 	EVENT.on(EVENT.item.close, close);
 	EVENT.on(EVENT.item.prev, prev);
@@ -54,10 +59,10 @@ async function open (_item, clickedEl) {
 
 	if (!isOpen) {
 		mediaItemElements = document.querySelectorAll('.main .media-item');
-		const targetBox = Object.assign(getBox(clickedEl), { backgroundColor: 'transparent' });
-		Object.assign(el.style, targetBox, { display: 'block' });
+		el.style.display = 'flex';
+		el.style.transformOrigin = getBoxCenter(clickedEl);
 		document.documentElement.style.overflow = 'hidden';
-		await animate(el, targetBox, fullScreen);
+		await animate(el, thumbProps, fullScreenProps);
 	}
 	full.src = _item.path;
 	isOpen = true;
@@ -66,8 +71,8 @@ async function open (_item, clickedEl) {
 async function close () {
 	img.src = item.thumb; // for smoother animation
 	const targetElement = Array.from(mediaItemElements).find(i => i.id === item.path);
-	const targetBox = Object.assign(getBox(targetElement), { backgroundColor: 'transparent' });
-	await animate(el, fullScreen, targetBox);
+	el.style.transformOrigin =  getBoxCenter(targetElement);
+	await animate(el, fullScreenProps, thumbProps);
 	el.style.display = 'none';
 	document.documentElement.style.overflow = '';
 	img.src = '#';
