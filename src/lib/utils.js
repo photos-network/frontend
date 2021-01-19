@@ -1,6 +1,8 @@
+const ANIMATION_SPEED = 300;
+
 // native js animation
 function animate (el, from, to, _options = {}) {
-	const dflt = {duration: 300, easing: 'ease-out', fill: 'forwards'};
+	const dflt = { duration: ANIMATION_SPEED, easing: 'ease-out', fill: 'forwards' };
 	const opts = Object.assign({}, dflt, _options);
 
 	return new Promise(resolve => {

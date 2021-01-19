@@ -1,6 +1,7 @@
 import { writable, derived } from 'svelte/store';
 import { EVENT } from './event';
 
+export const activeSection = writable('timeline');
 
 export const initialised = writable(false);
 

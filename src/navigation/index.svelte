@@ -1,7 +1,8 @@
 <svelte:window on:popstate={onpopstate}/>
 
 <nav>
-	<a class="icon-btn" title="Timeline" class:active="{active === 'timeline'}" href="#timeline">
+	<MenuLine />
+	<a class="icon-btn" title="Timeline" class:active="{$activeSection === 'timeline'}" href="#timeline">
 		<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-event" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
 			<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
 			<rect x="4" y="5" width="16" height="16" rx="2" />
@@ -12,7 +13,7 @@
 		  </svg>
 	</a>
 
-	<a class="icon-btn" title="Albums" class:active="{active === 'albums'}" href="#albums">
+	<a class="icon-btn" title="Albums" class:active="{$activeSection === 'albums'}" href="#albums">
 		<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-book" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
 			<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
 			<path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" />
@@ -23,14 +24,14 @@
 		  </svg>
 	</a>
 
-	<a class="icon-btn" title="Folders" class:active="{active === 'folders'}" href="#folders">
+	<a class="icon-btn" title="Folders" class:active="{$activeSection === 'folders'}" href="#folders">
 		<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-folder" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
 			<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
 			<path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2" />
 		  </svg>
 	</a>
 
-	<a class="icon-btn" title="Map" class:active="{active === 'map'}" href="#map">
+	<a class="icon-btn" title="Map" class:active="{$activeSection === 'map'}" href="#map">
 		<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-map-2" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
 			<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
 			<line x1="18" y1="6" x2="18" y2="6.01" />
@@ -41,7 +42,7 @@
 		  </svg>
 	</a>
 
-	<a class="icon-btn" title="Shared" class:active="{active === 'shared'}" href="#shared">
+	<a class="icon-btn" title="Shared" class:active="{$activeSection === 'shared'}" href="#shared">
 		<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-share" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
 			<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
 			<circle cx="6" cy="12" r="3" />
@@ -54,11 +55,11 @@
 </nav>
 
 <script>
-
-let active = 'timeline';
+import MenuLine from './menu-line';
+import { activeSection } from '../lib';
 
 function onpopstate () {
-	active = location.hash?.substr(1) || 'timeline';
+	$activeSection = location.hash?.substr(1) || 'timeline';
 }
 
 onpopstate();

@@ -18,7 +18,7 @@ import { EVENT, animate, getBoxCenter, items } from '../lib';
 
 let item = { src: '', name: '', type: 'photo' };
 let el, img, mediaItemElements, isOpen = false;
-const thumbProps = { scale: 0.1, opacity: 0 };
+const thumbProps = { scale: 0.2, opacity: 0 };
 const fullScreenProps = { scale: 1, opacity: 1 };
 
 onMount(() => {
@@ -61,7 +61,7 @@ async function open (_item, clickedEl) {
 		mediaItemElements = document.querySelectorAll('.main .media-item');
 		el.style.display = 'flex';
 		el.style.transformOrigin = getBoxCenter(clickedEl);
-		document.documentElement.style.overflow = 'hidden';
+		document.documentElement.style.overflow = 'hidden';  // hide scrollbars
 		await animate(el, thumbProps, fullScreenProps);
 	}
 	full.src = _item.path;

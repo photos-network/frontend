@@ -49,12 +49,12 @@
 	color: var(--color-text-dimmed);
 	border-radius: 50%;
 
-	padding: 7px;
-	height: 40px;
-	width: 40px;
+	padding: 8px;
+	height: 42px;
+	width: 42px;
 }
 .icon-btn svg { width: 100%; height: 100%; }
 
 .icon-btn:focus-visible { border-color: var(--color-accent); box-shadow: 0 0 2px 1px var(--color-accent); outline: 0; }
-.icon-btn:hover { transform: scale(1.1); color: var(--color-text); }
-.icon-btn:active { transform: scale(1.04); color: var(--color-text-dimmed); }
+.icon-btn:hover { color: var(--color-text); }
+.icon-btn:active { color: var(--color-text-dimmed); }

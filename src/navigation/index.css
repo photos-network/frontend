@@ -3,13 +3,20 @@ nav {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	position: relative;
+	height: 100%;
 }
 
-nav .icon-btn { margin: 0 20px; }
+nav .icon-btn { margin: 0 15px; }
+nav .active { color: var(--color-text); }
 
-nav .active {
-	border: 2px solid var(--color-highlight);
-	background: var(--color-highlight-semi);
+
+
+.menu-line {
+	position: absolute;
+	bottom: 0;
+	width: 40px;
+	border-bottom: 3px solid var(--color-highlight);
+	transition: transform var(--animation-speed) ease-out;
 }
-
-nav .active svg { stroke-width: 1.5px; }
+.menu-line.initial { transition: unset; }
