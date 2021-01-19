@@ -31,7 +31,7 @@ function viewItem () {
 
 
 function onfocus (e) {
-	e.target.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+	e.target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
 }
 
 </script>

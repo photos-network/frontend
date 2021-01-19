@@ -1,6 +1,6 @@
 // native js animation
 function animate (el, from, to, _options = {}) {
-	const dflt = {duration: 200, easing: 'ease-out', fill: 'forwards'};
+	const dflt = {duration: 300, easing: 'ease-out', fill: 'forwards'};
 	const opts = Object.assign({}, dflt, _options);
 
 	return new Promise(resolve => {
@@ -43,16 +43,11 @@ function fuzzy (hay = '', s = '') {
 }
 
 
-function getBox (el) {
+function getBoxCenter (el) {
 	const docEl = document.documentElement;
 	const {left, top, width, height} = el?.getBoundingClientRect() ||
 		{ left: docEl.offsetWidth / 2, top: docEl.offsetHeight / 2, width: 0, height: 0 };
-	return {
-		left: left + 'px',
-		top: top + 'px',
-		width: width + 'px',
-		height: height + 'px',
-	};
+	return `${left + width / 2}px ${top + height / 2}px`;
 }
 
 
@@ -78,7 +73,7 @@ export {
 	clone,
 	copyToClipboard,
 	fuzzy,
-	getBox,
+	getBoxCenter,
 	inView,
 	sortBy,
 };
