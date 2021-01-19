@@ -2,7 +2,7 @@
 	<div class="flex-spacer"></div>
 
 	<a href="#share" class="icon-btn btn-shared" title="Share"
-		on:click|preventDefault|stopPropagation="{info}">
+		on:click|preventDefault|stopPropagation="{share}">
 		<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-share" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
 			<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
 			<circle cx="6" cy="12" r="3" />
@@ -66,6 +66,10 @@ function onKeydown (e) {
 
 function close () {
 	EVENT.fire(EVENT.item.close);
+}
+
+function share () {
+	// EVENT.fire(EVENT.info.toggle);
 }
 
 function info () {

@@ -1,6 +1,5 @@
 const { series, parallel, src, dest, watch } = require('gulp');
 const path = require('path');
-const livereload = require('livereload');
 const del = require('del');
 
 const isProd = require('minimist')(process.argv.slice(2)).prod;
@@ -94,6 +93,7 @@ function cleanup () {
 
 async function watchTask (done) {
 	if (isProd) return done();
+	const livereload = require('livereload');
 	const server = livereload.createServer({ delay: 100 });
 	server.watch(path.join(__dirname, DIST_PATH));
 	watch('src/**/*.css', css);
