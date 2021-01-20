@@ -18,8 +18,8 @@ import { EVENT, animate, getBoxCenter, items } from '../lib';
 
 let item = { src: '', name: '', type: 'photo' };
 let el, img, mediaItemElements, isOpen = false;
-const thumbProps = { scale: 0.2, opacity: 0 };
-const fullScreenProps = { scale: 1, opacity: 1 };
+const thumbProps = { transform: 'scale(0.2)', opacity: 0 };
+const fullScreenProps = { transform: 'scale(1)', opacity: 1 };
 
 onMount(() => {
 	mediaItemElements = document.querySelectorAll('.main .media-item');
