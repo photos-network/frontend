@@ -53,6 +53,9 @@
 	will-change: width;
 }
 
+
+.media-viewer .video-wrapper,
+.media-viewer video,
 .media-viewer img { height: 100%; width: 100%; object-fit: contain; }
 
 

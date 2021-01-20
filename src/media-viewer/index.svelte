@@ -2,7 +2,11 @@
 	<Menu {isOpen} />
 	<div class="media-viewer-img-wrap">
 		<BtnPrev />
-		<img src="{item.thumb}" alt="{item.name || ''}" bind:this="{img}">
+		{#if item.type === 'video'}
+			<div class="video-wrapper" bind:this="{vidWrapperEl}"></div>
+		{:else}
+			<img src="{item.thumb}" alt="{item.name || ''}" bind:this="{imgEl}">
+		{/if}
 		<BtnNext />
 	</div>
 	<InfoPanel item="{item}"/>
@@ -17,7 +21,8 @@ import BtnNext from './btn-next';
 import { EVENT, animate, getBoxCenter, items } from '../lib';
 
 let item = { src: '', name: '', type: 'photo' };
-let el, img, mediaItemElements, isOpen = false;
+let el, imgEl, vidEl, vidWrapperEl;
+let mediaItemElements, isOpen = false;
 const thumbProps = { transform: 'scale(0.2)', opacity: 0 };
 const fullScreenProps = { transform: 'scale(1)', opacity: 1 };
 
@@ -48,14 +53,46 @@ function next () {
 function imgOnLoad (e) {
 	// ensure that on slow connection we're showing the right image
 	const itemPath = document.querySelector('.media-viewer')?.dataset?.itemPath;
-	if (e.target.src.includes(itemPath)) img.src = e.target.src;
+	if (imgEl && e.target.src.includes(itemPath)) imgEl.src = e.target.src;
 }
 
-async function open (_item, clickedEl) {
-	item = _item;
+function resetVideo () {
+	if (!vidEl) return;
+	vidEl.pause();
+	vidEl.currentTime = 0;
+	vidEl.remove();
+}
 
-	let full = new Image();
-	full.onload = imgOnLoad;
+/**
+ * This manual process is required as in a html template
+ * svelte would only replace what has changed, so src & poster attribute values
+ * however, to fully "reset" a video tag (to show the poster again) it must be
+ * removed and re-added to the DOM
+ */
+function createVideo () {
+	vidEl = document.createElement('VIDEO');
+	vidEl.poster = item.thumb;
+	vidEl.controls = 'controls';
+	vidWrapperEl.appendChild(vidEl);
+	requestAnimationFrame(() => {
+		const src = document.createElement('SOURCE');
+		src.src = item.path;
+		vidEl.appendChild(src);
+	});
+}
+
+
+
+async function open (_item, clickedEl) {
+	resetVideo();
+	item = _item;
+	let full;
+
+	if (item.type === 'video') requestAnimationFrame(createVideo);
+	else {
+		full = new Image();
+		full.onload = imgOnLoad;
+	}
 
 	if (!isOpen) {
 		mediaItemElements = document.querySelectorAll('.main .media-item');
@@ -64,18 +101,19 @@ async function open (_item, clickedEl) {
 		document.documentElement.style.overflow = 'hidden';  // hide scrollbars
 		await animate(el, thumbProps, fullScreenProps);
 	}
-	full.src = _item.path;
+	if (full) full.src = _item.path;
 	isOpen = true;
 }
 
 async function close () {
-	img.src = item.thumb; // for smoother animation
+	if (imgEl) imgEl.src = item.thumb; // for smoother animation
+	await resetVideo();
 	const targetElement = Array.from(mediaItemElements).find(i => i.id === item.path);
 	el.style.transformOrigin =  getBoxCenter(targetElement);
 	await animate(el, fullScreenProps, thumbProps);
 	el.style.display = 'none';
 	document.documentElement.style.overflow = '';
-	img.src = '#';
+	if (imgEl) imgEl.src = '#';
 	isOpen = false;
 	requestAnimationFrame(() => targetElement.focus());
 }
