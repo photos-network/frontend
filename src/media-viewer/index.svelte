@@ -13,7 +13,7 @@
 </div>
 
 <script>
-import { onMount } from 'svelte';
+import { onMount, tick } from 'svelte';
 import Menu from './menu';
 import InfoPanel from './info-panel';
 import BtnPrev from './btn-prev';
@@ -74,7 +74,7 @@ function createVideo () {
 	vidEl.poster = item.thumb;
 	vidEl.controls = 'controls';
 	vidWrapperEl.appendChild(vidEl);
-	requestAnimationFrame(() => {
+	tick().then(() => {
 		const src = document.createElement('SOURCE');
 		src.src = item.path;
 		vidEl.appendChild(src);
@@ -88,7 +88,7 @@ async function open (_item, clickedEl) {
 	item = _item;
 	let full;
 
-	if (item.type === 'video') requestAnimationFrame(createVideo);
+	if (item.type === 'video') await tick().then(createVideo);
 	else {
 		full = new Image();
 		full.onload = imgOnLoad;
@@ -103,6 +103,7 @@ async function open (_item, clickedEl) {
 	}
 	if (full) full.src = _item.path;
 	isOpen = true;
+	if (item.type === 'video') tick().then(() => vidEl.focus());
 }
 
 async function close () {
@@ -115,6 +116,6 @@ async function close () {
 	document.documentElement.style.overflow = '';
 	if (imgEl) imgEl.src = '#';
 	isOpen = false;
-	requestAnimationFrame(() => targetElement.focus());
+	tick().then(() => targetElement.focus());
 }
 </script>
