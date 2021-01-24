@@ -34,30 +34,17 @@
 	}
 }
 
-html,
-body { margin: 0; padding: 0; }
-html { height: 100%; width: 100%; }
+html { margin: 0; padding: 0; height: 100%; width: 100%; }
 body {
 	font: 13px sans-serif;
-	background: var(--color-background);
 	color: var(--color-text);
+	background: var(--color-background);
 	user-select: none;
 	box-sizing: border-box;
-	padding-bottom: 20px;
+	margin: 0;
+	padding: 0 0 20px;
 }
 
 body * { box-sizing: inherit; }
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 { margin: 0; font-weight: normal; line-height: 1; }
-
-p { line-height: 1.4; }
-p.success { color: var(--color-success); }
-p.warning { color: var(--color-warning); }
-p.danger { color: var(--color-danger); }
 
 .flex-spacer { flex: 1; }

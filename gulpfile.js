@@ -84,7 +84,7 @@ function assets () {
 }
 
 function htmls () {
-	return src(['src/*.html', 'src/*.json']).pipe(dest(DIST_PATH));
+	return src('src/*.html').pipe(dest(DIST_PATH));
 }
 
 function cleanup () {
