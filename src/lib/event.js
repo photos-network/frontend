@@ -18,6 +18,7 @@ export const EVENT = {
 	},
 	document: {
 		clicked: 'document-clicked',
+		keydown: 'document-keydown',
 	},
 
 };

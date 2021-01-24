@@ -34,7 +34,7 @@ const keyMap = {
 };
 
 onMount(() => {
-	document.addEventListener('keydown', onKeydown, true);
+	EVENT.on(EVENT.document.keydown, onKeydown);
 });
 
 
