@@ -57,7 +57,7 @@ function js () {
 			inlineSvg(),
 			svelte({ compilerOptions: {dev: !isProd, css: false } }),
 			isProd && terser(),
-			serve({ contentBase: [DIST_PATH, 'storage'], port: 3000 }),
+			!isProd && serve({ contentBase: [DIST_PATH, 'storage'], port: 3000 }),
 		]
 	};
 	const outputOptions = {output: {format: 'iife', sourcemap: !isProd}};
@@ -82,7 +82,12 @@ function css () {
 }
 
 function htmls () {
-	return src('src/*.html').pipe(dest(DIST_PATH));
+	const noop = require('through2').obj;
+	const inject = require('gulp-inject-string');
+	return src('src/*.html')
+		.pipe(isProd ? noop() : inject.before('</body>',
+			'\t<script src="http://localhost:35729/livereload.js?snipver=1"></script>\n'))
+		.pipe(dest(DIST_PATH));
 }
 
 function cleanup () {
