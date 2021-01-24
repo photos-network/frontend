@@ -4,12 +4,14 @@
 		on:click|preventDefault="{viewItem}"
 		id="{src.path}">
 	<img bind:this="{img}" src="#" alt="{src.name || ''}">
+	<Spinner />
 </a>
 
 
 <script>
 import { onMount } from 'svelte';
 import { EVENT, inView } from '../lib';
+import Spinner from '../spinner';
 export let src = { src: '', name: 'Loading...', type: 'photo' };
 
 let loading = false;

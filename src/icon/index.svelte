@@ -15,7 +15,6 @@ import map from '../../assets/map.svg';
 import meatballs from '../../assets/meatballs.svg';
 import photo from '../../assets/photo.svg';
 import play from '../../assets/play.svg';
-import puff from '../../assets/puff.svg';
 import search from '../../assets/search.svg';
 import shared from '../../assets/shared.svg';
 import trash from '../../assets/trash.svg';
@@ -37,7 +36,6 @@ const icons = {
 	meatballs,
 	photo,
 	play,
-	puff,
 	search,
 	shared,
 	trash,
