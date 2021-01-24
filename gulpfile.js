@@ -45,6 +45,7 @@ function js () {
 	const resolve = require('@rollup/plugin-node-resolve').nodeResolve;
 	const {terser} = require('rollup-plugin-terser');
 	const serve = require('rollup-plugin-serve');
+	const inlineSvg = require('rollup-plugin-inline-svg');
 	const inputOptions = {
 		input: './src/index.js',
 		plugins: [
@@ -53,6 +54,7 @@ function js () {
 				extensions: ['.mjs', '.js', '.svelte', '.json'],
 				dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/')
 			}),
+			inlineSvg(),
 			svelte({ compilerOptions: {dev: !isProd, css: false } }),
 			isProd && terser(),
 			serve({ contentBase: [DIST_PATH, 'storage'], port: 3000 }),
@@ -79,10 +81,6 @@ function css () {
 		.pipe(dest(DIST_PATH));
 }
 
-function assets () {
-	return src(['src/assets/**/*.*']).pipe(dest(DIST_PATH + 'assets/'));
-}
-
 function htmls () {
 	return src('src/*.html').pipe(dest(DIST_PATH));
 }
@@ -99,10 +97,9 @@ async function watchTask (done) {
 	watch('src/**/*.css', css);
 	watch('src/**/*.{js,svelte}', parallel(eslint, js));
 	watch('src/*.html', htmls);
-	watch('src/assets/**/*.*', assets);
 }
 
-const build = parallel(js, css, assets, htmls, eslint);
+const build = parallel(js, css, htmls, eslint);
 exports.eslint = eslint;
 exports.build = series(cleanup, build);
 exports.default = series(build, watchTask);
