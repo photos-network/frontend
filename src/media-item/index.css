@@ -24,7 +24,7 @@
 	height: calc(var(--item-size) + var(--max-offset));
 	width: 100%;
 	margin-top: calc(var(--max-offset) * -1);
-	transform: translateY(var(--scroll-offset, 0));
+	transform: translate3d(0, var(--scroll-offset, 0), 1px);
 }
 
 .media-item.video:not(.loading)::after {

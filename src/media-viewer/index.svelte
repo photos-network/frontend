@@ -23,7 +23,7 @@ import { EVENT, animate, getBoxCenter, items } from '../lib';
 let item = { src: '', name: '', type: 'photo' };
 let el, imgEl, vidEl, vidWrapperEl;
 let mediaItemElements, isOpen = false;
-const thumbProps = { transform: 'scale(0.2)', opacity: 0 };
+const thumbProps = { transform: 'scale(0.1)', opacity: 0 };
 const fullScreenProps = { transform: 'scale(1)', opacity: 1 };
 
 onMount(() => {
@@ -106,7 +106,8 @@ async function open (_item, clickedEl) {
 	if (item.type === 'video') tick().then(() => vidEl.focus());
 }
 
-async function close () {
+async function close (e) {
+	if (e?.target?.closest('video')) return;
 	if (imgEl) imgEl.src = item.thumb; // for smoother animation
 	await resetVideo();
 	const targetElement = Array.from(mediaItemElements).find(i => i.id === item.path);
