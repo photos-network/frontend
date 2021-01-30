@@ -64,6 +64,11 @@ function inView (elem, cb = () => {}) {
 	observer.observe(elem);
 }
 
+function sleep (dur) {
+	return new Promise(resolve => {
+		setTimeout(() => resolve(), dur || 0);
+	});
+}
 
 function sortBy (items, field = 'date_taken') {
 	return items.sort((a, b) => a[field] - b[field]);
@@ -77,5 +82,6 @@ export {
 	fuzzy,
 	getBoxCenter,
 	inView,
+	sleep,
 	sortBy,
 };

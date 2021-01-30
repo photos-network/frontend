@@ -11,8 +11,9 @@
 
 <script>
 import MenuLine from './menu-line';
-import { activeSection } from '../lib';
+import { activeSection, EVENT } from '../lib';
 import ICON from '../icon';
+import { onMount, tick } from 'svelte';
 const menuItems = [
 	{ id: 'timeline', title: 'Timeline', icon: 'calendar' },
 	{ id: 'albums',   title: 'Albums',   icon: 'book'     },
@@ -22,8 +23,12 @@ const menuItems = [
 ];
 
 function onpopstate () {
+	EVENT.fire(EVENT.app.beforeSectionChange);
 	$activeSection = location.hash?.substr(1) || 'timeline';
+	EVENT.fire(EVENT.app.afterSectionChange, $activeSection);
 }
 
-onpopstate();
+onMount(() => {
+	tick().then(onpopstate);
+});
 </script>

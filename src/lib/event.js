@@ -6,6 +6,8 @@ export const EVENT = {
 
 	app: {
 		started: 'app-started',
+		beforeSectionChange: 'before-section-change',
+		afterSectionChange: 'after-section-change',
 	},
 	item: {
 		view: 'item-view',
