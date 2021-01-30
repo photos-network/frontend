@@ -55,6 +55,7 @@
 }
 .icon-btn svg { width: 100%; height: 100%; }
 
+.icon-btn:focus { outline: none; }
 .icon-btn:focus-visible { border-color: var(--color-accent); box-shadow: 0 0 2px 1px var(--color-accent); outline: 0; }
 .icon-btn:hover { color: var(--color-text); }
 .icon-btn:active { color: var(--color-text-dimmed); }

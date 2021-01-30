@@ -34,11 +34,15 @@ onMount(() => {
 	});
 	instance.start();
 
-
 	inView(elem, () => {
 		loading = true;
 		img.src = src.thumb || src.path || '#';
 		img.onload = () => requestAnimationFrame(() => loading = false);
+	});
+
+	requestAnimationFrame(() => {
+		instance.calculate();
+		instance.update();
 	});
 });
 
