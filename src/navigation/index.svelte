@@ -2,22 +2,24 @@
 
 <nav>
 	<MenuLine />
-	<a class="icon-btn" title="Timeline" class:active="{$activeSection === 'timeline'}" href="#timeline">
-		<ICON name="calendar" /></a>
-	<a class="icon-btn" title="Albums" class:active="{$activeSection === 'albums'}" href="#albums">
-		<ICON name="book" /></a>
-	<a class="icon-btn" title="Folders" class:active="{$activeSection === 'folders'}" href="#folders">
-		<ICON name="folder" /></a>
-	<a class="icon-btn" title="Map" class:active="{$activeSection === 'map'}" href="#map">
-		<ICON name="map" /></a>
-	<a class="icon-btn" title="Shared" class:active="{$activeSection === 'shared'}" href="#shared">
-		  <ICON name="shared" /></a>
+	{#each menuItems as item}
+		<a class="icon-btn" class:active="{$activeSection === item.id}"
+			title="{item.title}" href="#{item.id}"><ICON name="{item.icon}" />
+		</a>
+	{/each}
 </nav>
 
 <script>
 import MenuLine from './menu-line';
 import { activeSection } from '../lib';
 import ICON from '../icon';
+const menuItems = [
+	{ id: 'timeline', title: 'Timeline', icon: 'calendar' },
+	{ id: 'albums',   title: 'Albums',   icon: 'book'     },
+	{ id: 'folders',  title: 'Folders',  icon: 'folder'   },
+	{ id: 'map',      title: 'Map',      icon: 'map'      },
+	{ id: 'shared',   title: 'Shared',   icon: 'shared'   },
+];
 
 function onpopstate () {
 	$activeSection = location.hash?.substr(1) || 'timeline';

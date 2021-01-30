@@ -1,12 +1,13 @@
 nav {
+	position: relative;
+	height: 100%;
+	display: flex;
 	margin: 0;
 	align-items: center;
 	justify-content: space-between;
-	position: relative;
-	height: 100%;
 }
 
-nav .icon-btn { margin: 0 15px; }
+nav .icon-btn { height: 42px; width: 42px; margin: 0 15px; }
 nav .active { color: var(--color-text); }
 
 
@@ -14,8 +15,10 @@ nav .active { color: var(--color-text); }
 .menu-line {
 	position: absolute;
 	bottom: 0;
-	width: 40px;
-	border-bottom: 3px solid var(--color-highlight);
+	width: 42px;
+	height: 3px;
+	background: linear-gradient(var(--color-highlight-light), var(--color-highlight));
+	border-radius: 2px;
 	transition: transform var(--animation-speed) ease-out;
 }
 .menu-line.initial { transition: unset; }
