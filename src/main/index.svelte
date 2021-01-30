@@ -1,19 +1,21 @@
 <main class="main">
 	{#if $initialised}
-		{#if $groups}
-			{#each $groups as group}
-				<MediaGroup group="{group}" />
-			{/each}
-		{:else}
-			Add some photos
-		{/if}
+		<svelte:component this={section}/>
 	{:else}
 		Loading...
 	{/if}
 </main>
 
 <script>
-import MediaGroup from '../media-group';
-import { initialised, groups } from '../lib';
+import { initialised, activeSection } from '../lib';
+import timeline from '../main-timeline';
+import albums from '../main-albums';
+
+const sections = {
+	timeline,
+	albums
+};
+
+$:section = sections[$activeSection];
 
 </script>

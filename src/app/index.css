@@ -9,6 +9,9 @@
 	--color-success: #408062;
 	--color-danger: #8b4848;
 	--animation-speed: 0.3s;
+
+	--max-offset: 60px;
+	--item-size: 220px;
 }
 
 @media (prefers-color-scheme: dark) {
