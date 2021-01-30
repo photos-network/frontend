@@ -5,6 +5,10 @@ const del = require('del');
 const isProd = require('minimist')(process.argv.slice(2)).prod;
 const DIST_PATH = 'dist/';
 
+function assets () {
+	return src('assets/*.{ico,png}').pipe(dest(DIST_PATH));
+}
+
 function eslint () {
 	const gulpEslint = require('gulp-eslint');
 	return src(['src/**/*.js', 'src/**/*.svelte', '*.js'])
@@ -104,7 +108,7 @@ async function watchTask (done) {
 	watch('src/*.html', htmls);
 }
 
-const build = parallel(js, css, htmls, eslint);
+const build = parallel(js, css, htmls, eslint, assets);
 exports.eslint = eslint;
 exports.build = series(cleanup, build);
 exports.default = series(build, watchTask);
