@@ -1,13 +1,17 @@
 <div class="media-viewer" bind:this="{el}" on:click="{close}" data-item-path="{item.path}">
 	<Menu {isOpen} />
 	<div class="media-viewer-img-wrap">
-		<BtnPrev />
+		{#if currentItemIndex > 0}
+			<BtnPrev />
+		{/if}
 		{#if item.type === 'video'}
 			<div class="video-wrapper" bind:this="{vidWrapperEl}"></div>
 		{:else}
 			<img src="{item.thumb}" alt="{item.name || ''}" bind:this="{imgEl}">
 		{/if}
-		<BtnNext />
+		{#if currentItemIndex < mediaItemElements?.length - 1}
+			<BtnNext />
+		{/if}
 	</div>
 	<InfoPanel item="{item}"/>
 </div>
@@ -21,10 +25,12 @@ import BtnNext from './btn-next';
 import { EVENT, animate, getBoxCenter, items } from '../lib';
 
 let item = { src: '', name: '', type: 'photo' };
+let currentItemIndex = 0;
 let el, imgEl, vidEl, vidWrapperEl;
 let mediaItemElements, isOpen = false;
 const thumbProps = { transform: 'scale(0.1)', opacity: 0 };
 const fullScreenProps = { transform: 'scale(1)', opacity: 1 };
+
 
 onMount(() => {
 	mediaItemElements = document.querySelectorAll('.main .media-item');
@@ -34,16 +40,22 @@ onMount(() => {
 	EVENT.on(EVENT.item.next, next);
 });
 
+function getCurrentItemIndex () {
+	if (!mediaItemElements) return 0;
+	return Array.from(mediaItemElements).findIndex(i => i.id === item.path);
+}
 
 function prev () {
-	const idx = Array.from(mediaItemElements).findIndex(i => i.id === item.path);
+	const idx = getCurrentItemIndex();
+	if (idx <= 0) return;
 	const nodeId = (idx > 0 ? mediaItemElements[idx - 1] : mediaItemElements[idx]).id;
 	const _item = $items.find(i => i.path === nodeId);
 	EVENT.fire(EVENT.item.view, _item);
 }
 
 function next () {
-	const idx = Array.from(mediaItemElements).findIndex(i => i.id === item.path);
+	const idx = getCurrentItemIndex();
+	if (idx >= mediaItemElements?.length - 1) return;
 	const nodeId = (idx < mediaItemElements.length ? mediaItemElements[idx + 1] : mediaItemElements[idx]).id;
 	const _item = $items.find(i => i.path === nodeId);
 	EVENT.fire(EVENT.item.view, _item);
@@ -103,13 +115,14 @@ async function open (_item, clickedEl) {
 	}
 	if (full) full.src = _item.path;
 	isOpen = true;
+	currentItemIndex = getCurrentItemIndex();
 	if (item.type === 'video') tick().then(() => vidEl.focus());
 }
 
 async function close (e) {
 	if (e?.target?.closest('video')) return;
 	if (imgEl) imgEl.src = item.thumb; // for smoother animation
-	await resetVideo();
+	resetVideo();
 	const targetElement = Array.from(mediaItemElements).find(i => i.id === item.path);
 	el.style.transformOrigin =  getBoxCenter(targetElement);
 	await animate(el, fullScreenProps, thumbProps);

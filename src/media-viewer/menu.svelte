@@ -3,19 +3,19 @@
 
 	<a href="#share" class="icon-btn btn-shared" title="Share"
 		on:click|preventDefault|stopPropagation="{share}">
-		<ICON name="shared"/>
+		<Icon name="shared"/>
 	</a>
 	<a href="#info" class="icon-btn btn-info" title="Toggle Info Panel"
 		on:click|preventDefault|stopPropagation="{info}">
-		<ICON name="info"/>
+		<Icon name="info"/>
 	</a>
 	<a href="#delete" class="icon-btn btn-delete" title="Delete"
 		on:click|preventDefault|stopPropagation="{del}">
-		<ICON name="trash"/>
+		<Icon name="trash"/>
 	</a>
 	<a href="#close" class="icon-btn btn-close" title="Close Viewer"
 		on:click|preventDefault|stopPropagation="{close}">
-		<ICON name="close"/>
+		<Icon name="close"/>
 	</a>
 </div>
 
@@ -24,7 +24,7 @@
 <script>
 import { onMount } from 'svelte';
 import { EVENT } from '../lib';
-import ICON from '../icon';
+import Icon from '../icon';
 
 export let isOpen;
 const keyMap = {

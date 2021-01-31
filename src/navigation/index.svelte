@@ -4,7 +4,7 @@
 	<MenuLine />
 	{#each menuItems as item}
 		<a class="icon-btn" class:active="{$activeSection === item.id}"
-			title="{item.title}" href="#{item.id}"><ICON name="{item.icon}" />
+			title="{item.title}" href="#{item.id}"><Icon name="{item.icon}" />
 		</a>
 	{/each}
 </nav>
@@ -12,7 +12,7 @@
 <script>
 import MenuLine from './menu-line';
 import { activeSection, EVENT } from '../lib';
-import ICON from '../icon';
+import Icon from '../icon';
 import { onMount, tick } from 'svelte';
 const menuItems = [
 	{ id: 'timeline', title: 'Timeline', icon: 'calendar' },

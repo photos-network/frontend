@@ -1,11 +1,11 @@
 <a href="#prev" class="icon-btn btn-prev" title="Previous"
 	on:click|preventDefault|stopPropagation="{prev}">
-	<ICON name="chevronLeft"/>
+	<Icon name="chevronLeft"/>
 </a>
 
 <script>
 import { EVENT } from '../lib';
-import ICON from '../icon';
+import Icon from '../icon';
 
 function prev () {
 	EVENT.fire(EVENT.item.prev);

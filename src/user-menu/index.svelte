@@ -1,10 +1,10 @@
 <div class="user-menu">
 	<button class="icon-btn" title="User Menu">
-		<ICON name="user"/>
+		<Icon name="user"/>
 	</button>
 </div>
 
 <script>
-import ICON from '../icon';
+import Icon from '../icon';
 
 </script>

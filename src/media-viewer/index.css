@@ -38,7 +38,9 @@
 .media-viewer .btn-next:hover  { background-color: var(--color-background); }
 
 .media-viewer .btn-prev { left: 10px; }
+.media-viewer .btn-prev svg { margin-left: -5px; }
 .media-viewer .btn-next { right: 10px; }
+.media-viewer .btn-next svg { margin-left: 2px; }
 
 
 /* PHOTO / VIDEO */

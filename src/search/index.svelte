@@ -1,10 +1,10 @@
 <div class="search">
 	<button class="icon-btn" title="Search">
-		<ICON name="search"/>
+		<Icon name="search"/>
 	</button>
 </div>
 
 <script>
-import ICON from '../icon';
+import Icon from '../icon';
 
 </script>
