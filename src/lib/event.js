@@ -22,5 +22,8 @@ export const EVENT = {
 		clicked: 'document-clicked',
 		keydown: 'document-keydown',
 	},
+	window: {
+		resize: 'window-resize',
+	},
 
 };

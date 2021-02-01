@@ -8,6 +8,7 @@ import calendar from '../../assets/calendar.svg';
 import chevronLeft from '../../assets/chevron-left.svg';
 import chevronRight from '../../assets/chevron-right.svg';
 import close from '../../assets/close.svg';
+import dots from '../../assets/dots.svg';
 import folder from '../../assets/folder.svg';
 import info from '../../assets/info.svg';
 import list from '../../assets/list.svg';
@@ -29,6 +30,7 @@ const icons = {
 	chevronLeft,
 	chevronRight,
 	close,
+	dots,
 	folder,
 	info,
 	list,

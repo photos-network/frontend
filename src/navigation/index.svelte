@@ -2,11 +2,16 @@
 
 <nav>
 	<MenuLine />
-	{#each menuItems as item}
-		<a class="icon-btn" class:active="{$activeSection === item.id}"
+	<a class="icon-btn btn-menu" title="Menu" href="#menu">
+		<Icon name="dots"/>
+	</a>
+	<div class="menu">
+		{#each menuItems as item}
+			<a class="icon-btn" class:active="{$activeSection === item.id}"
 			title="{item.title}" href="#{item.id}"><Icon name="{item.icon}" />
 		</a>
-	{/each}
+		{/each}
+	</div>
 </nav>
 
 <script>
