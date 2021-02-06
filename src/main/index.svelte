@@ -21,8 +21,8 @@ const sections = {
 
 
 onMount(() => {
-	EVENT.on(EVENT.app.beforeSectionChange, startSectionChange);
-	EVENT.on(EVENT.app.afterSectionChange, finishSectionChange);
+	EVENT.on(EVENT.nav.section.beforeChange, startSectionChange);
+	EVENT.on(EVENT.nav.section.afterChange, finishSectionChange);
 });
 
 

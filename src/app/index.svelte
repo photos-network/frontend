@@ -1,11 +1,14 @@
 <Header />
 <Main />
 <MediaViewer />
+<Router />
+
 <script>
 import { onMount } from 'svelte';
 import Header from '../header';
 import Main from '../main';
 import MediaViewer from '../media-viewer';
+import Router from '../router';
 import { EVENT } from '../lib';
 
 let resizeTimer;

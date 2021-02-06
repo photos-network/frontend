@@ -1,8 +1,6 @@
-<svelte:window on:popstate={onpopstate}/>
-
 <nav>
 	<MenuLine />
-	<a class="icon-btn btn-menu" title="Menu" href="#menu">
+	<a class="icon-btn btn-menu" title="Menu" href="#menu" on:click|preventDefault="{() => alert('dragons')}">
 		<Icon name="dots"/>
 	</a>
 	<div class="menu">
@@ -16,9 +14,9 @@
 
 <script>
 import MenuLine from './menu-line';
-import { activeSection, EVENT } from '../lib';
+import { activeSection } from '../lib';
 import Icon from '../icon';
-import { onMount, tick } from 'svelte';
+
 const menuItems = [
 	{ id: 'timeline', title: 'Timeline', icon: 'calendar' },
 	{ id: 'albums',   title: 'Albums',   icon: 'book'     },
@@ -27,13 +25,5 @@ const menuItems = [
 	{ id: 'shared',   title: 'Shared',   icon: 'shared'   },
 ];
 
-function onpopstate () {
-	EVENT.fire(EVENT.app.beforeSectionChange);
-	$activeSection = location.hash?.substr(1) || 'timeline';
-	EVENT.fire(EVENT.app.afterSectionChange, $activeSection);
-}
 
-onMount(() => {
-	tick().then(onpopstate);
-});
 </script>

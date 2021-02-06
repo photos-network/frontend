@@ -13,8 +13,7 @@
 		on:click|preventDefault|stopPropagation="{del}">
 		<Icon name="trash"/>
 	</a>
-	<a href="#close" class="icon-btn btn-close" title="Close Viewer"
-		on:click|preventDefault|stopPropagation="{close}">
+	<a href="#{$activeSection}" class="icon-btn btn-close" title="Close Viewer">
 		<Icon name="close"/>
 	</a>
 </div>
@@ -23,14 +22,14 @@
 
 <script>
 import { onMount } from 'svelte';
-import { EVENT } from '../lib';
+import { EVENT, activeSection } from '../lib';
 import Icon from '../icon';
 
 export let isOpen;
 const keyMap = {
 	ArrowLeft: () => EVENT.fire(EVENT.item.prev),
 	ArrowRight: () => EVENT.fire(EVENT.item.next),
-	Escape: () => EVENT.fire(EVENT.item.close),
+	Escape: () => location.hash = $activeSection,
 };
 
 onMount(() => {
@@ -41,10 +40,6 @@ onMount(() => {
 function onKeydown (e) {
 	if (!isOpen) return;
 	if (typeof keyMap[e.key] === 'function') keyMap[e.key](e);
-}
-
-function close () {
-	EVENT.fire(EVENT.item.close);
 }
 
 function share () {

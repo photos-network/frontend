@@ -1,9 +1,17 @@
 import { writable, derived } from 'svelte/store';
 import { EVENT } from './event';
 
-export const activeSection = writable('timeline');
+export const activeSection = writable('');
+export const activeAction = writable('');
+export const activeID = writable('');
 
 export const initialised = writable(false);
+
+
+EVENT.on(EVENT.app.started, () => {
+	initialised.set(true);
+	items.load();
+});
 
 function ItemStore () {
 	const { subscribe, set } = writable([]);
@@ -36,10 +44,4 @@ export const groups = derived(items, $items => {
 		grps[title].items.push(item);
 	});
 	return Object.values(grps) || [];
-});
-
-
-EVENT.on(EVENT.app.started, () => {
-	initialised.set(true);
-	items.load();
 });

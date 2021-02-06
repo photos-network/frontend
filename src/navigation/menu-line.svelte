@@ -7,15 +7,14 @@ let initial = true;
 let el;
 
 onMount(() => {
-	activeSection.subscribe(onchange);
+	EVENT.on(EVENT.nav.afterChange, ({section}) => onchange(section));
 	EVENT.on(EVENT.window.resize, () => onchange());
 });
 
 
-function onchange (v) {
-	if (!v) v = $activeSection;
+function onchange (v = $activeSection) {
 	const menuItem = el.parentNode.querySelector(`a[href="#${v}"]`);
-	el.style.transform = `translateX(${menuItem.offsetLeft}px)`;
+	if (menuItem) el.style.transform = `translateX(${menuItem.offsetLeft}px)`;
 	if (initial) setTimeout(() => initial = false, 300);
 }
 

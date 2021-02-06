@@ -1,26 +1,21 @@
-<a href="#{src.path}" class="media-item {src.type || 'photo'}"
-		class:loading="{loading}"
-		bind:this="{elem}"
-		on:click|preventDefault="{viewItem}"
-		id="{src.path}">
-	<img bind:this="{img}" src="#" alt="{src.name || ''}">
-	<Spinner />
+<a href="#timeline/preview/{src.id}" class="media-item {src.type || 'photo'}"
+	class:loading="{loading}"
+	bind:this="{elem}"
+	id="{src.id}">
+		<img bind:this="{img}" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="{src.name || ''}">
+		<Spinner />
 </a>
 
 
 <script>
 import { onMount, onDestroy } from 'svelte';
-import { EVENT, inView } from '../lib';
+import { inView } from '../lib';
 import * as basicScroll from 'basicscroll';
 import Spinner from '../spinner';
 export let src = { src: '', name: 'Loading...', type: 'photo' };
 
 let loading = false;
 let elem, img, instance;
-
-function viewItem () {
-	EVENT.fire(EVENT.item.view, src, elem);
-}
 
 
 onMount(() => {
@@ -30,7 +25,7 @@ onMount(() => {
 		from: 'top-bottom',
 		to: 'bottom-top',
 		direct: true,
-		props: { '--scroll-offset': { from: '0px', to: '60px' } }
+		props: { '--scroll-offset': { from: '0px', to: '60px' } },
 	});
 	instance.start();
 

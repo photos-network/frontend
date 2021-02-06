@@ -6,8 +6,22 @@ export const EVENT = {
 
 	app: {
 		started: 'app-started',
-		beforeSectionChange: 'before-section-change',
-		afterSectionChange: 'after-section-change',
+	},
+	nav: {
+		beforeChange: 'nav-before-change',
+		afterChange: 'nav-after-change',
+		section: {
+			beforeChange: 'nav-section-after-change',
+			afterChange: 'nav-section-before-change',
+		},
+		action: {
+			beforeChange: 'nav-action-after-change',
+			afterChange: 'nav-action-before-change',
+		},
+		id: {
+			beforeChange: 'nav-id-after-change',
+			afterChange: 'nav-id-before-change',
+		}
 	},
 	item: {
 		view: 'item-view',

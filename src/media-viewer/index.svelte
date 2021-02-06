@@ -1,4 +1,4 @@
-<div class="media-viewer" bind:this="{el}" on:click="{close}" data-item-path="{item.path}">
+<div class="media-viewer" bind:this="{el}" data-item-path="{item.path}">
 	<Menu {isOpen} />
 	<div class="media-viewer-img-wrap">
 		{#if currentItemIndex > 0}
@@ -22,7 +22,7 @@ import Menu from './menu';
 import InfoPanel from './info-panel';
 import BtnPrev from './btn-prev';
 import BtnNext from './btn-next';
-import { EVENT, animate, getBoxCenter, items } from '../lib';
+import { EVENT, animate, getBoxCenter, items, sleep } from '../lib';
 
 let item = { src: '', name: '', type: 'photo' };
 let currentItemIndex = 0;
@@ -33,32 +33,39 @@ const fullScreenProps = { transform: 'scale(1)', opacity: 1 };
 
 
 onMount(() => {
-	mediaItemElements = document.querySelectorAll('.main .media-item');
-	EVENT.on(EVENT.item.view, open);
-	EVENT.on(EVENT.item.close, close);
-	EVENT.on(EVENT.item.prev, prev);
-	EVENT.on(EVENT.item.next, next);
+	EVENT.on(EVENT.nav.afterChange, onNavChange);
 });
 
+
+async function itemsRendered () {
+	return new Promise(resolve => {
+		let unsub;
+		unsub = items.subscribe(async () => {
+			if (typeof unsub !== 'function') return;
+			unsub();
+			await sleep(500); // ugly but required
+			resolve();
+		});
+	});
+}
+
+
+async function onNavChange (nav) {
+	if (!$items.length) await itemsRendered();
+
+	mediaItemElements = document.querySelectorAll('.main .media-item');
+	if (isOpen && nav.action !== 'preview') return close();
+	if (nav.action === 'preview' && nav.id) {
+		const _item = $items.find(i => i.id === nav.id);
+		return open(_item);
+	}
+}
+
+
 function getCurrentItemIndex () {
-	if (!mediaItemElements) return 0;
-	return Array.from(mediaItemElements).findIndex(i => i.id === item.path);
-}
-
-function prev () {
-	const idx = getCurrentItemIndex();
-	if (idx <= 0) return;
-	const nodeId = (idx > 0 ? mediaItemElements[idx - 1] : mediaItemElements[idx]).id;
-	const _item = $items.find(i => i.path === nodeId);
-	EVENT.fire(EVENT.item.view, _item);
-}
-
-function next () {
-	const idx = getCurrentItemIndex();
-	if (idx >= mediaItemElements?.length - 1) return;
-	const nodeId = (idx < mediaItemElements.length ? mediaItemElements[idx + 1] : mediaItemElements[idx]).id;
-	const _item = $items.find(i => i.path === nodeId);
-	EVENT.fire(EVENT.item.view, _item);
+	if (!mediaItemElements) mediaItemElements = document.querySelectorAll('.main .media-item');
+	if (!mediaItemElements?.length) return 0;
+	return Array.from(mediaItemElements).findIndex(i => i.id === item.id);
 }
 
 
@@ -71,7 +78,6 @@ function imgOnLoad (e) {
 function resetVideo () {
 	if (!vidEl) return;
 	vidEl.pause();
-	vidEl.currentTime = 0;
 	vidEl.remove();
 }
 
@@ -95,10 +101,12 @@ function createVideo () {
 
 
 
-async function open (_item, clickedEl) {
+async function open (_item) {
 	resetVideo();
 	item = _item;
 	let full;
+
+	const targetElement = document.querySelector(`.main .media-item[id=${item.id}`);
 
 	if (item.type === 'video') await tick().then(createVideo);
 	else {
@@ -107,9 +115,8 @@ async function open (_item, clickedEl) {
 	}
 
 	if (!isOpen) {
-		mediaItemElements = document.querySelectorAll('.main .media-item');
 		el.style.display = 'flex';
-		el.style.transformOrigin = getBoxCenter(clickedEl);
+		el.style.transformOrigin = getBoxCenter(targetElement);
 		document.documentElement.style.overflow = 'hidden';  // hide scrollbars
 		await animate(el, thumbProps, fullScreenProps);
 	}
@@ -119,15 +126,15 @@ async function open (_item, clickedEl) {
 	if (item.type === 'video') tick().then(() => vidEl.focus());
 }
 
-async function close (e) {
-	if (e?.target?.closest('video')) return;
+async function close () {
 	if (imgEl) imgEl.src = item.thumb; // for smoother animation
 	resetVideo();
-	const targetElement = Array.from(mediaItemElements).find(i => i.id === item.path);
+	const targetElement = document.querySelector(`.main .media-item[id=${item.id}`);
 	el.style.transformOrigin =  getBoxCenter(targetElement);
 	await animate(el, fullScreenProps, thumbProps);
 	el.style.display = 'none';
 	document.documentElement.style.overflow = '';
+
 	if (imgEl) imgEl.src = '#';
 	isOpen = false;
 	tick().then(() => targetElement.focus());
