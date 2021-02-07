@@ -4,6 +4,10 @@
 import { activeSection, activeAction, activeID, EVENT } from '../lib';
 import { onMount, tick } from 'svelte';
 
+onMount(() => {
+	tick().then(onpopstate);
+});
+
 function onpopstate () {
 	if (!location.hash) return location.hash = 'timeline';
 	const [ section, action, id ] = location.hash?.substr(1).split('/');
@@ -29,7 +33,4 @@ function onpopstate () {
 	EVENT.fire(EVENT.nav.afterChange, { section, action, id });
 }
 
-onMount(() => {
-	tick().then(onpopstate);
-});
 </script>

@@ -1,4 +1,4 @@
-<a href="#timeline/preview/{src.id}" class="media-item {src.type || 'photo'}"
+<a href="#{$activeSection}/preview/{src.id}" class="media-item {src.type || 'photo'}"
 	class:loading="{loading}"
 	bind:this="{elem}"
 	id="{src.id}">
@@ -9,7 +9,7 @@
 
 <script>
 import { onMount, onDestroy } from 'svelte';
-import { inView } from '../lib';
+import { activeSection, inView } from '../lib';
 import * as basicScroll from 'basicscroll';
 import Spinner from '../spinner';
 export let src = { src: '', name: 'Loading...', type: 'photo' };
