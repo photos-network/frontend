@@ -8,20 +8,15 @@ let el, wrapperEl;
 
 
 afterUpdate(() => {
-	resetVideo();
+	removeVideo();
 	tick().then(createVideo);
 });
 
 onDestroy(() => {
-	resetVideo();
+	removeVideo();
 });
 
 
-function resetVideo () {
-	if (!el) return;
-	el.pause();
-	el.remove();
-}
 
 /**
  * This manual process is required as in a html template
@@ -40,6 +35,14 @@ function createVideo () {
 		el.appendChild(src);
 		tick().then(() => el.focus());
 	});
+}
+
+
+
+function removeVideo () {
+	if (!el) return;
+	el.pause();
+	el.remove();
 }
 
 </script>

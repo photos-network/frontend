@@ -14,8 +14,8 @@ import Menu from './menu';
 import InfoPanel from './info-panel';
 import BtnPrev from './btn-prev';
 import BtnNext from './btn-next';
-import Video from './video';
-import Image from './image';
+import Video from './item-video';
+import Image from './item-image';
 import { EVENT, animate, getBoxCenter, items } from '../lib';
 
 let item = { src: '', name: '', type: 'photo' };
