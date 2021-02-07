@@ -1,5 +1,6 @@
 import { writable, derived } from 'svelte/store';
 import { EVENT } from './event';
+import { sleep } from './utils';
 
 export const activeSection = writable('');
 export const activeAction = writable('');
@@ -26,10 +27,26 @@ function ItemStore () {
 		// dragons, etc.
 	}
 
+	/**
+	 * This resolves once the items "are rendered"
+	 */
+	async function rendered () {
+		return new Promise(resolve => {
+			let unsub;
+			unsub = items.subscribe(async () => {
+				if (typeof unsub !== 'function') return;
+				unsub();
+				await sleep(500); // ugly but required
+				resolve();
+			});
+		});
+	}
+
 	return {
 		subscribe,
 		load,
 		upload,
+		rendered,
 		reset: () => set([])
 	};
 }

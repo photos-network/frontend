@@ -1,17 +1,9 @@
 <div class="media-viewer" bind:this="{el}" data-item-path="{item.path}">
 	<Menu {isOpen} />
 	<div class="media-viewer-img-wrap">
-		{#if currentItemIndex > 0}
-			<BtnPrev />
-		{/if}
-		{#if item.type === 'video'}
-			<div class="video-wrapper" bind:this="{vidWrapperEl}"></div>
-		{:else}
-			<img src="{item.thumb}" alt="{item.name || ''}" bind:this="{imgEl}">
-		{/if}
-		{#if currentItemIndex < mediaItemElements?.length - 1}
-			<BtnNext />
-		{/if}
+		<BtnPrev />
+		<svelte:component this={component} item="{item}"/>
+		<BtnNext />
 	</div>
 	<InfoPanel item="{item}"/>
 </div>
@@ -22,12 +14,15 @@ import Menu from './menu';
 import InfoPanel from './info-panel';
 import BtnPrev from './btn-prev';
 import BtnNext from './btn-next';
-import { EVENT, animate, getBoxCenter, items, sleep } from '../lib';
+import Video from './video';
+import Image from './image';
+import { EVENT, animate, getBoxCenter, items } from '../lib';
 
 let item = { src: '', name: '', type: 'photo' };
-let currentItemIndex = 0;
-let el, imgEl, vidEl, vidWrapperEl;
-let mediaItemElements, isOpen = false;
+$:component = item.type === 'video' ? Video : Image;
+
+let el;
+let isOpen = false;
 const thumbProps = { transform: 'scale(0.1)', opacity: 0 };
 const fullScreenProps = { transform: 'scale(1)', opacity: 1 };
 
@@ -37,23 +32,8 @@ onMount(() => {
 });
 
 
-async function itemsRendered () {
-	return new Promise(resolve => {
-		let unsub;
-		unsub = items.subscribe(async () => {
-			if (typeof unsub !== 'function') return;
-			unsub();
-			await sleep(500); // ugly but required
-			resolve();
-		});
-	});
-}
-
-
 async function onNavChange (nav) {
-	if (!$items.length) await itemsRendered();
-
-	mediaItemElements = document.querySelectorAll('.main .media-item');
+	if (!$items.length) await items.rendered();
 	if (isOpen && nav.action !== 'preview') return close();
 	if (nav.action === 'preview' && nav.id) {
 		const _item = $items.find(i => i.id === nav.id);
@@ -62,81 +42,41 @@ async function onNavChange (nav) {
 }
 
 
-function getCurrentItemIndex () {
-	if (!mediaItemElements) mediaItemElements = document.querySelectorAll('.main .media-item');
-	if (!mediaItemElements?.length) return 0;
-	return Array.from(mediaItemElements).findIndex(i => i.id === item.id);
-}
-
-
-function imgOnLoad (e) {
-	// ensure that on slow connection we're showing the right image
-	const itemPath = document.querySelector('.media-viewer')?.dataset?.itemPath;
-	if (imgEl && e.target.src.includes(itemPath)) imgEl.src = e.target.src;
-}
-
-function resetVideo () {
-	if (!vidEl) return;
-	vidEl.pause();
-	vidEl.remove();
-}
-
-/**
- * This manual process is required as in a html template
- * svelte would only replace what has changed, so src & poster attribute values
- * however, to fully "reset" a video tag (to show the poster again) it must be
- * removed and re-added to the DOM
- */
-function createVideo () {
-	vidEl = document.createElement('VIDEO');
-	vidEl.poster = item.thumb;
-	vidEl.controls = 'controls';
-	vidWrapperEl.appendChild(vidEl);
-	tick().then(() => {
-		const src = document.createElement('SOURCE');
-		src.src = item.path;
-		vidEl.appendChild(src);
-	});
-}
-
-
-
 async function open (_item) {
-	resetVideo();
 	item = _item;
-	let full;
-
-	const targetElement = document.querySelector(`.main .media-item[id=${item.id}`);
-
-	if (item.type === 'video') await tick().then(createVideo);
-	else {
-		full = new Image();
-		full.onload = imgOnLoad;
-	}
-
-	if (!isOpen) {
-		el.style.display = 'flex';
-		el.style.transformOrigin = getBoxCenter(targetElement);
-		document.documentElement.style.overflow = 'hidden';  // hide scrollbars
-		await animate(el, thumbProps, fullScreenProps);
-	}
-	if (full) full.src = _item.path;
+	if (!isOpen) await toggle(true);
 	isOpen = true;
-	currentItemIndex = getCurrentItemIndex();
-	if (item.type === 'video') tick().then(() => vidEl.focus());
 }
+
 
 async function close () {
-	if (imgEl) imgEl.src = item.thumb; // for smoother animation
-	resetVideo();
-	const targetElement = document.querySelector(`.main .media-item[id=${item.id}`);
-	el.style.transformOrigin =  getBoxCenter(targetElement);
-	await animate(el, fullScreenProps, thumbProps);
-	el.style.display = 'none';
-	document.documentElement.style.overflow = '';
-
-	if (imgEl) imgEl.src = '#';
+	await toggle(false);
 	isOpen = false;
-	tick().then(() => targetElement.focus());
 }
+
+
+
+/**
+ * Open/Close animation
+ * @param opening {boolean}
+ */
+async function toggle (opening) {
+	const targetElement = document.querySelector(`.main .media-item[id=${item.id}`);
+	el.style.transformOrigin = getBoxCenter(targetElement);
+
+	if (opening) {
+		document.documentElement.style.overflow = 'hidden';  // hide scrollbars
+		el.style.display = 'flex';
+		await animate(el, thumbProps, fullScreenProps);
+	}
+	else {
+		await animate(el, fullScreenProps, thumbProps);
+		el.style.display = 'none';
+		document.documentElement.style.overflow = '';
+		tick().then(() => targetElement.focus());
+	}
+}
+
+
+
 </script>

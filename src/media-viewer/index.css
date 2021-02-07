@@ -42,6 +42,8 @@
 .media-viewer .btn-next { right: 10px; }
 .media-viewer .btn-next svg { margin-left: 2px; }
 
+.icon-btn[hidden] { display: none; }
+
 
 /* PHOTO / VIDEO */
 .media-viewer-img-wrap {
