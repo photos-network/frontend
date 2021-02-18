@@ -1,6 +1,7 @@
 <Header />
 <Main />
 <MediaViewer />
+<Uploader />
 <Router />
 
 <script>
@@ -8,6 +9,7 @@ import { onMount } from 'svelte';
 import Header from '../header';
 import Main from '../main';
 import MediaViewer from '../media-viewer';
+import Uploader from '../uploader';
 import Router from '../router';
 import { EVENT } from '../lib';
 

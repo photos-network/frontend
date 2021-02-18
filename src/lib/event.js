@@ -36,6 +36,9 @@ export const EVENT = {
 		clicked: 'document-clicked',
 		keydown: 'document-keydown',
 	},
+	uploader: {
+		browse: 'uploader-browse',
+	},
 	window: {
 		resize: 'window-resize',
 	},

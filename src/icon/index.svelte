@@ -21,6 +21,7 @@ import shared from '../../assets/shared.svg';
 import trash from '../../assets/trash.svg';
 import upload from '../../assets/upload.svg';
 import user from '../../assets/user.svg';
+import video from '../../assets/video.svg';
 
 const icons = {
 	arrowLeft,
@@ -43,6 +44,7 @@ const icons = {
 	trash,
 	upload,
 	user,
+	video,
 };
 
 export let name = '';

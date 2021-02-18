@@ -75,6 +75,28 @@ function sortBy (items, field = 'date_taken') {
 }
 
 
+function formatBytes (bytes, decimals = 2) {
+	if (bytes === 0) return '0 Bytes';
+	const k = 1024;
+	const dm = decimals < 0 ? 0 : decimals;
+	const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+	const i = Math.floor(Math.log(bytes) / Math.log(k));
+	return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
+function guid () {
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+		const r = Math.random() * 16 | 0;
+		const v = c == 'x' ? r : (r & 0x3 | 0x8);
+		return v.toString(16);
+	});
+}
+
+function isVideoType (type) {
+	return type.includes('video');
+}
+
+
 export {
 	animate,
 	clone,
@@ -84,4 +106,7 @@ export {
 	inView,
 	sleep,
 	sortBy,
+	formatBytes,
+	guid,
+	isVideoType,
 };

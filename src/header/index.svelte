@@ -4,6 +4,7 @@
 	<Navigation />
 	<div class="flex-spacer"></div>
 	<Search />
+	<UploadButton />
 	<UserMenu />
 </header>
 
@@ -11,5 +12,6 @@
 import Navigation from '../navigation';
 import Search from '../search';
 import UserMenu from '../user-menu';
+import UploadButton from '../uploader/upload-button';
 
 </script>
