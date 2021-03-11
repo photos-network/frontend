@@ -46,15 +46,15 @@
 	justify-content: space-between;
 	flex-wrap: wrap;
 	border: 1px solid var(--color-border);
-	margin: -1px;
+	margin: -1px 0 0 0;
 	background: var(--color-background-semi);
 	-webkit-backdrop-filter: blur(10px);
 	backdrop-filter: blur(10px);
 }
 
-.uploader-item .icon-btn { margin: -10px -10px 0 0; }
+.uploader-item .icon-btn { margin: -13px -13px 0 0; }
 .uploader-item-thumb { max-width: 48px; max-height: 48px; }
-.uploader-item-name { color: var(--color-text-dimmed); flex: 1; padding: 3px 0 3px 15px; }
+.uploader-item-name { color: var(--color-text-dimmed); flex: 1; padding: 1px 0 1px 15px; }
 .uploader-item-name em { font-style: normal; color: var(--color-text); display: block; font-size: 15px; }
 
 
