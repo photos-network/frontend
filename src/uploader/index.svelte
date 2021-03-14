@@ -37,7 +37,7 @@ import UploadItem from './upload-item';
 let uploadingFiles = [];
 let inputElement;
 let showCover = false;
-let showUploadPanel = true;
+let showUploadPanel = false;
 
 onMount(() => {
 	EVENT.on( EVENT.uploader.browse, () => inputElement.click());
@@ -76,6 +76,7 @@ function onload (file, thumb) {
 function cancelUpload (e) {
 	const item = e.detail;
 	uploadingFiles = uploadingFiles.filter(i => i.id !== item.id);
+	if (!uploadingFiles.length) showUploadPanel = false;
 }
 
 
