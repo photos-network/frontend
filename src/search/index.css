@@ -29,3 +29,8 @@
 	font-size: 17px;
 	font-weight: 200;
 }
+
+
+@media (max-width: 590px) {
+	.search { margin-left: 0; }
+}
