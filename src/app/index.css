@@ -12,6 +12,7 @@
 
 	--max-offset: 60px;
 	--item-size: 220px;
+	--header-height: 50px;
 }
 
 @media (prefers-color-scheme: dark) {

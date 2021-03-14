@@ -2,7 +2,7 @@
 	{
 		"id": "Photo1",
 		"name": "Photo 1",
-		"description": "",
+		"description": "bear",
 		"type": "photo",
 		"path": "photo01.jpg",
 		"thumb": "photo01-thumb.jpg",

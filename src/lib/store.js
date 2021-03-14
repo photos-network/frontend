@@ -5,7 +5,7 @@ import { sleep } from './utils';
 export const activeSection = writable('');
 export const activeAction = writable('');
 export const activeID = writable('');
-
+export const query = writable('');
 export const initialised = writable(false);
 
 
@@ -53,9 +53,20 @@ function ItemStore () {
 
 export const items = ItemStore([]);
 
-export const groups = derived(items, $items => {
+export const filteredItems = derived([items, query], ([$items, $query]) => {
+	if (!$query) return $items;
+	const q = $query.toLowerCase();
+	return $items.filter(item => {
+		const {name, description} = item;
+		if (name && name.toLowerCase().includes(q)) return true;
+		if (description && description.toLowerCase().includes(q)) return true;
+		return false;
+	});
+});
+
+export const groups = derived(filteredItems, $filteredItems => {
 	const grps = {};
-	$items.forEach(item => {
+	$filteredItems.forEach(item => {
 		const title = item.date_taken;
 		grps[title] = grps[title] || { title, items: [] };
 		grps[title].items.push(item);

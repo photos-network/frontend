@@ -3,4 +3,29 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	background: transparent;
+	border-radius: 4px;
+	height: calc(var(--header-height) - 14px);
+	position: relative;
+	min-width: 35px;
+	width: 35px;
+	transition: width var(--animation-speed) ease-out;
+}
+
+.search.opened {
+	width: 260px;
+	background: var(--color-background);
+}
+
+.search .icon-btn {
+	position: absolute;
+}
+.search .search-input {
+	height: 100%;
+	width: 100%;
+	border-radius: inherit;
+	padding: 2px 5px 0 40px;
+	font: inherit;
+	font-size: 17px;
+	font-weight: 200;
 }

@@ -1,10 +1,10 @@
-{#if $items}
+{#if $filteredItems?.length}
 	<MediaGroup group="{group}" />
 {/if}
 
 <script>
 import MediaGroup from '../media-group';
-import { items } from '../lib';
+import { filteredItems } from '../lib';
 
-$:group = { items: $items };
+$:group = { items: $filteredItems };
 </script>
