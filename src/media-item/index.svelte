@@ -9,7 +9,7 @@
 
 <script>
 import { onMount, onDestroy } from 'svelte';
-import { activeSection, inView } from '../lib';
+import { ANIMATION_SPEED, activeSection, inView } from '../lib';
 import * as basicScroll from 'basicscroll';
 import Spinner from '../spinner';
 export let src = { src: '', name: 'Loading...', type: 'photo' };
@@ -20,14 +20,16 @@ let elem, img, instance;
 
 onMount(() => {
 	// create parallax/depth effect on photos (scroll them slower than the page)
-	instance = basicScroll.create({
-		elem,
-		from: 'top-bottom',
-		to: 'bottom-top',
-		direct: true,
-		props: { '--scroll-offset': { from: '0px', to: '60px' } },
-	});
-	instance.start();
+	if (ANIMATION_SPEED !== 0) {
+		instance = basicScroll.create({
+			elem,
+			from: 'top-bottom',
+			to: 'bottom-top',
+			direct: true,
+			props: { '--scroll-offset': { from: '0px', to: '60px' } },
+		});
+		instance.start();
+	}
 
 	inView(elem, () => {
 		loading = true;
@@ -35,7 +37,7 @@ onMount(() => {
 		img.onload = () => requestAnimationFrame(() => loading = false);
 	});
 
-	requestAnimationFrame(() => {
+	if (instance) requestAnimationFrame(() => {
 		instance.calculate();
 		instance.update();
 	});

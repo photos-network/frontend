@@ -1,4 +1,9 @@
-const ANIMATION_SPEED = 300;
+let ANIMATION_SPEED = 300;
+
+// Grab the prefers reduced media query.
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+if (!reducedMotion || reducedMotion.matches) ANIMATION_SPEED = 0;
+
 
 // native js animation
 function animate (el, from, to, _options = {}) {
@@ -98,6 +103,7 @@ function isVideoType (type) {
 
 
 export {
+	ANIMATION_SPEED,
 	animate,
 	clone,
 	copyToClipboard,
