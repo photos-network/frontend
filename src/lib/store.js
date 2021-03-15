@@ -55,7 +55,7 @@ export const items = ItemStore([]);
 
 export const filteredItems = derived([items, query], ([$items, $query]) => {
 	if (!$query) return $items;
-	const q = $query.toLowerCase();
+	const q = $query.toLowerCase().trim();
 	return $items.filter(item => {
 		const {name, description} = item;
 		if (name && name.toLowerCase().includes(q)) return true;
