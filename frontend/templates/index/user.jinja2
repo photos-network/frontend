@@ -1,0 +1,171 @@
+{% extends 'base.jinja2' %}
+
+{% block title %}Index{% endblock %}
+
+{% block body %}
+
+
+<!-- add photos / albums / share -->
+
+
+<section class="text-gray-600 body-font overflow-hidden">
+  <div class="container px-5 py-24 mx-auto">
+
+    <div class="mt-10 sm:mt-0">
+    <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+        <div class="px-4 sm:px-0">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">Profile</h3>
+            <p class="mt-1 text-sm text-gray-600">This information will be displayed publicly so be careful what you share.</p>
+        </div>
+        </div>
+        <div class="mt-5 md:mt-0 md:col-span-2">
+        <form action="#" method="POST">
+            <div class="shadow overflow-hidden sm:rounded-md">
+            <div class="px-4 py-5 bg-white sm:p-6">
+                <div class="grid grid-cols-6 gap-6">
+                <div class="col-span-6 sm:col-span-3">
+                    <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
+                    <input type="text" name="first-name" id="first-name" value={{ first_name }} autocomplete="given-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                </div>
+
+                <div class="col-span-6 sm:col-span-3">
+                    <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
+                    <input type="text" name="last-name" id="last-name" value={{ last_name }} autocomplete="family-name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                </div>
+
+                <div class="col-span-12 sm:col-span-6">
+                    <label for="about" class="block text-sm font-medium text-gray-700"> About </label>
+                    <div class="mt-1">
+                        <textarea id="about" name="about" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md" placeholder="you@example.com"></textarea>
+                    </div>
+                    <p class="mt-2 text-sm text-gray-500">Brief description for your profile. URLs are hyperlinked.</p>
+                </div>
+
+            </div>
+        </form>
+        </div>
+        <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+            <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <div class="hidden sm:block" aria-hidden="true">
+    <div class="py-5">
+        <div class="border-t border-gray-200"></div>
+    </div>
+    </div>
+
+    <div class="mt-10 sm:mt-0">
+    <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+        <div class="px-4 sm:px-0">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">Account Information</h3>
+            <p class="mt-1 text-sm text-gray-600">These informations are only used by the system.</p>
+        </div>
+        </div>
+        <div class="mt-5 md:mt-0 md:col-span-2">
+        <form action="#" method="POST">
+            <div class="shadow overflow-hidden sm:rounded-md">
+            <div class="px-4 py-5 bg-white sm:p-6">
+                <div class="grid grid-cols-6 gap-6">
+
+                <div class="col-span-6 sm:col-span-4">
+                    <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
+                    <span class="inline-flex w-full items-center px-3 border-gray-300 rounded-md bg-gray-50 text-gray-500 text-sm"> {{ username }} </span>
+                </div>
+
+                <div class="col-span-6 sm:col-span-4">
+                    <label for="password" class="block text-sm font-medium text-gray-700">New password</label>
+                    <input type="password" name="password" id="password" autocomplete="password" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                </div>
+
+                </div>
+            </div>
+            <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
+            </div>
+            </div>
+        </form>
+        </div>
+    </div>
+    </div>
+
+    <div class="hidden sm:block" aria-hidden="true">
+    <div class="py-5">
+        <div class="border-t border-gray-200"></div>
+    </div>
+    </div>
+
+    <div class="mt-10 sm:mt-0">
+    <div class="md:grid md:grid-cols-3 md:gap-6">
+        <div class="md:col-span-1">
+        <div class="px-4 sm:px-0">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">Notifications</h3>
+            <p class="mt-1 text-sm text-gray-600">Decide which communications you'd like to receive and how.</p>
+        </div>
+        </div>
+        <div class="mt-5 md:mt-0 md:col-span-2">
+        <form action="#" method="POST">
+            <div class="shadow overflow-hidden sm:rounded-md">
+            <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+                <fieldset>
+                <legend class="text-base font-medium text-gray-900">By Email</legend>
+                <div class="mt-4 space-y-4">
+                    <div class="flex items-start">
+                    <div class="flex items-center h-5">
+                        <input id="comments" name="comments" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                    </div>
+                    <div class="ml-3 text-sm">
+                        <label for="comments" class="font-medium text-gray-700">Comments</label>
+                        <p class="text-gray-500">Get notified when someones posts a comment on an image of yours.</p>
+                    </div>
+                    </div>
+                    <div class="flex items-start">
+                    <div class="flex items-center h-5">
+                        <input id="tag" name="tag" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                    </div>
+                    <div class="ml-3 text-sm">
+                        <label for="tag" class="font-medium text-gray-700">Tag</label>
+                        <p class="text-gray-500">Get notified when someone tags you in an image.</p>
+                    </div>
+                    </div>
+                </div>
+                </fieldset>
+                <fieldset>
+                <div>
+                    <legend class="text-base font-medium text-gray-900">Push Notifications</legend>
+                    <p class="text-sm text-gray-500">These are delivered directly to your app on the mobile phone.</p>
+                </div>
+                <div class="mt-4 space-y-4">
+                    <div class="flex items-center">
+                    <input id="push-everything" name="push-notifications" type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                    <label for="push-everything" class="ml-3 block text-sm font-medium text-gray-700"> Everything </label>
+                    </div>
+                    <div class="flex items-center">
+                    <input id="push-email" name="push-notifications" type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                    <label for="push-email" class="ml-3 block text-sm font-medium text-gray-700"> Same as email </label>
+                    </div>
+                    <div class="flex items-center">
+                    <input id="push-nothing" name="push-notifications" type="radio" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
+                    <label for="push-nothing" class="ml-3 block text-sm font-medium text-gray-700"> No push notifications </label>
+                    </div>
+                </div>
+                </fieldset>
+            </div>
+            <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</button>
+            </div>
+            </div>
+        </form>
+        </div>
+    </div>
+    </div>
+
+</div>
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="An opensource and privacy first selfhosting Image System.">
+
+  <title>Photos.network | {% block title %}{% endblock %}</title>
+
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+  <link rel="icon" type="image/png" href="/static/favicon.png">
+
+  <link rel="apple-touch-icon" href="/static/custom-icon.png">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <!-- Microsoft Tiles -->
+  <meta name="msapplication-config" content="/static/browserconfig.xml">
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            clifford: '#da373d',
+            accent: '#706CF6',
+            error: '#F2BAB9',
+            success: '#D2ECAE',
+            warn: '#F9F4BC',
+            neutral: '#CEEFF4',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+    }
+  </style>
+
+  <style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+    form {border: 3px solid #f1f1f1;}
+  </style>
+
+</head>
+<body>
+
+  {% include 'partials/header.jinja2' %}
+
+  <div class="ui main container mx-auto">
+    {% block body %}{% endblock %}
+  </div>
+
+  {% include 'partials/footer.jinja2' %}
+
+</body>
+</html>
