@@ -7,7 +7,7 @@ from jinja2 import pass_context
 from jinja2.ext import InternationalizationExtension
 from markupsafe import Markup
 
-localedir = os.path.join("..", "locales")
+localedir = os.path.join("locales")
 domain = "messages"
 threadLocalData = threading.local()
 threadLocalData.locale = "en_US"
