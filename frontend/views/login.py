@@ -25,11 +25,10 @@ class LoginView(RequestView):
         # create an opaque value to prevent cross-site requests
         state = str(sha1(str(SystemRandom().random()).encode("ascii")).hexdigest())
 
-        frontend.oauth_client.state = state
+        frontend.core_client.state = state
 
-        authorization_url = frontend.oauth_client.get_authorize_url(
+        authorization_url = frontend.core_client.get_authorize_url(
             scope=SCOPES,
-            redirect_uri=str(frontend.config.redirect_uri),
             state=state,
         )
 

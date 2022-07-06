@@ -37,19 +37,23 @@ def main() -> int:
     config_dir = os.path.abspath(os.path.join(os.getcwd(), "config"))
     config_file = os.path.join(config_dir, "configuration.json")
 
+    if not os.path.exists(config_dir):
+        _LOGGER.info(f"create directory {config_dir}")
+        os.mkdir(config_dir)
+
     if not os.path.exists(config_file):
         # create default config file
         with open(file=config_file, mode="w+", encoding="utf-8") as file:
             hostname = socket.gethostname()
 
             output = {
-                "frontend_url": socket.gethostbyname(hostname),
+                "frontend_url": "http://" + str(socket.gethostbyname(hostname)),
                 "frontend_port": 7778,
-                "core_url": socket.gethostbyname(hostname),
+                "core_url": "http://127.0.0.1",
                 "core_port": 7777,
                 "client_id": "",
                 "client_secret": "",
-                "redirect_uri": "",
+                "redirect_uri": "http://127.0.0.1:7778/callback",
             }
             json.dump(output, file, indent=2)
             file.close()

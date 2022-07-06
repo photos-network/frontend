@@ -15,14 +15,18 @@
     <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
     {% if username %}
       <a href="/" class="mr-5 hover:text-white">Photos</a>
-      <a href="/albums" class="mr-5 hover:text-white">Albums</a>
+      <!--<a href="/albums" class="mr-5 hover:text-white">Albums</a>-->
       <a href="/logout" class="mr-5 hover:text-white">{% trans %}Logout{% endtrans %}</a>
     {% else %}
       <a href="/login" class="mr-5 hover:text-white">{% trans %}Login{% endtrans %}</a>
     {% endif %}
     </nav>
 
+    {% if username %}
     <div onclick="location.href='/user'" class="w-10 h-10 rounded-full inline-flex items-center justify-center bg-white text-gray-400">
+    {% else %}
+    <div class="w-10 h-10 rounded-full inline-flex items-center justify-center bg-white text-gray-400">
+    {% endif %}
       <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
         <circle cx="12" cy="7" r="4"></circle>

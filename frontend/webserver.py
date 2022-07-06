@@ -121,14 +121,14 @@ class Webserver:
         self, request: web.Request, handler: Callable[[web.Request], Awaitable[web.StreamResponse]]
     ) -> web.StreamResponse:
         """Check if user is authenticated and authentication is still valid."""
-        authenticated = False
 
+        authenticated = False
         session = await aiohttp_session.get_session(request)
         username = session.get("username")
+
         if not username:
             return await handler(request)
 
-        access_token = session.get("access_token")
         refresh_token = session.get("refresh_token")
         expires_in = session.get("expires_in")
 
@@ -137,13 +137,19 @@ class Webserver:
 
             # refresh token if access_token expires in next 3 minutes or has been expired already
             if (expires_in - now) <= 180:
-                access_token, provider_data = await self.frontend.oauth_client.get_access_token(
-                    refresh_token, grant_type="refresh_token"
-                )
-                session["access_token"] = str(provider_data["access_token"])
-                session["refresh_token"] = str(provider_data["refresh_token"])
+                status_code = await self.frontend.core_client.refresh_token()
 
-        authenticated = True
+                _LOGGER.error("status: " + str(status_code))
+
+            authenticated = True
+
+        validate_access_token_status = await self.frontend.core_client.check_access_token()
+        if validate_access_token_status != 200:
+            authenticated = False
+
+            if self.frontend.core_client.accessToken == None:
+                session.clear()
+                raise web.HTTPFound(location="/")
 
         request[KEY_AUTHENTICATED] = authenticated
 

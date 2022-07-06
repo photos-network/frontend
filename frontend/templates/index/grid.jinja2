@@ -1,23 +1,22 @@
 <section class="text-gray-600 body-font">
   <!-- Grid -->
-  <div class="container px-5 py-24 mx-auto grid">
-  <ul id="ul-li">
+
+  <div class="container px-5 py-10 mx-auto lg:pt-12 lg:px-32">
+    <div class="grid grid-cols-4 gap-4" id="lightgallery">
       {% if files is defined and files|length > 0 %}
         {% for item in files %}
-        <li data-src="/photo/{{ item.link }}/{{ item.file }}">
+
         {% if item.filetype == "video/mp4" %}
-            <a href="/photo/{{ item.link }}/{{ item.file }}" data-lightbox="set"><video width="320" height="240" controls><source src="/image/{{ item.link }}/{{ item.file }}" type="video/mp4"></video></a>
+            <a href="/photo/{{ item.link }}/{{ item.file }}" data-lg-size="1024-800"><video width="320" height="240" controls><source src="/image/{{ item.link }}/{{ item.file }}" type="video/mp4"></video></a>
         {% else %}
-            <a href="/photo/{{ item.id }}" data-lightbox="set"><img src="/photo/{{ item.id }}" alt="{{ item.name }}" class="grow" loading="lazy"></a>
+            <a href="/photo/{{ item.id }}" data-lg-size="1024-800"><img src="/photo/{{ item.id }}" alt="{{ item.name }}" class="block object-cover object-center w-full h-full rounded-lg" loading="lazy"></a>
         {% endif %}
-        </li>
+
         {% endfor %}
 
-        <!--  Adding an empty <li> here so the final photo doesn't stretch like crazy. Try removing it and see what happens!  -->
-        <li></li>
       {% else %}
         No files to show
       {% endif %}
-  </ul>
+      </div>
   </div>
 </section>

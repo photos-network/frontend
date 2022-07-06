@@ -9,8 +9,7 @@ from typing import Any, Dict, List, Optional, Set
 
 from colorlog import ColoredFormatter
 
-from frontend.base.core_client import CoreClient
-from frontend.base.oauth import CoreOauth2Client
+from frontend.base.oauth import CoreClient
 from frontend.base.state import FrontendState
 from frontend.config import Config
 from frontend.webserver import Webserver
@@ -28,7 +27,6 @@ class Frontend:
     """Frontend application class."""
 
     http: Webserver = None
-    oauth_client: CoreOauth2Client = None
     core_client: CoreClient = None
 
     def __init__(self, config: Config) -> None:
@@ -149,14 +147,7 @@ class Frontend:
         # To flush out any call_soon_threadsafe
         await asyncio.sleep(0)
 
-        # setup oauth client
-        self.oauth_client = CoreOauth2Client(self.config.client_id, self.config.client_secret)
-        self.oauth_client.set_from_config(
-            config=self.config,
-            logger=_LOGGER,
-        )
-        _LOGGER.info("Oauth client setup done.")
-
+        # setup core client
         self.core_client = CoreClient(self.config)
         _LOGGER.info("Core client setup done.")
 
