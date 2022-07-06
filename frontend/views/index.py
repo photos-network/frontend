@@ -26,6 +26,7 @@ class IndexView(RequestView):
         files = []
 
         authenticated = request.get(KEY_AUTHENTICATED, False)
+
         if authenticated:
             files = await self._get_files_for_user(frontend, request)
 
@@ -43,16 +44,10 @@ class IndexView(RequestView):
 
     async def _get_files_for_user(self, frontend: "Frontend", request: web.Request) -> Dict[str, Any]:
         """Load files where the current user has access"""
-        session = await aiohttp_session.get_session(request)
 
-        user = await frontend.oauth_client.request(
-            method="GET",
-            url="/api/photos?limit=10&offset=0",
-        )
+        response = await frontend.core_client.get_photos()
 
-        _LOGGER.debug(user)
-
-        if "results" in user:
-            return user["results"]
+        if "results" in response:
+            return response["results"]
 
         return []

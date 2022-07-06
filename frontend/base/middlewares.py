@@ -29,7 +29,7 @@ async def auth_token(
 
         # refresh token if it expires soon
         if (expires_in - now) <= 180:
-            access_token, provider_data = await oauth_client.get_access_token(refresh_token, grant_type="refresh_token")
+            access_token, provider_data = await core_client.get_access_token(refresh_token, grant_type="refresh_token")
             save_token_pair_locally(access_token, provider_data)
 
     return await handler(request)

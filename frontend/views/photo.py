@@ -1,5 +1,6 @@
 import fileinput
 import logging
+import tempfile
 from hashlib import sha1
 from random import SystemRandom
 from typing import TYPE_CHECKING
@@ -28,13 +29,14 @@ class PhotoView(RequestView):
         request: web.Request,
         entity_id: str,
     ):
-        file = await frontend.oauth_client.request(
+        file_response = await frontend.core_client.request(
             method="GET",
             url="/api/file/" + entity_id,
         )
 
-        _LOGGER.debug("+++++++")
-        _LOGGER.debug(type(file))
-        _LOGGER.debug(len(file))
-
-        return web.StreamResponse(body=file, status=200)
+        resp = web.StreamResponse(status=200)
+        resp.headers["Content-Type"] = "image/jpeg"
+        resp.headers["Content-Length"] = str(len(file_response))
+        await resp.prepare(request)
+        await resp.write(file_response)
+        return resp

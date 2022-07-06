@@ -27,25 +27,14 @@ class UserView(RequestView):
         session = await aiohttp_session.get_session(request)
         username = session.get("username")
 
-        user = await frontend.oauth_client.request(
-            method="GET",
-            url="/api/user/",
-        )
+        user = await frontend.core_client.user_info()
 
-        _LOGGER.debug(user)
-
-        last_name = ""
-        if "lastname" in user:
-            last_name = user["lastname"]
-
-        first_name = ""
-        if "firstname" in user:
-            first_name = user["firstname"]
+        _LOGGER.debug(str(user))
 
         response = aiohttp_jinja2.render_template(
             template_name="index/user.jinja2",
             request=request,
-            context={"username": username, "first_name": first_name, "last_name": last_name},
+            context={"username": username, "first_name": user.first_name, "last_name": user.last_name},
         )
 
         return response
@@ -56,30 +45,41 @@ class UserView(RequestView):
         _LOGGER.warn("apply user changes is not implemented yet")
 
         data = await request.post()
-        first_name = data["first-name"]
-        _LOGGER.debug("new first-name: " + str(first_name))
+        _LOGGER.error(str(data))
 
-        user = await frontend.oauth_client.request(
-            method="GET",
-            url="/api/user/",
-        )
+        if "first-name" in data:
+            first_name = data["first-name"]
+            _LOGGER.debug("new first-name: " + str(first_name))
+
+        if "last-name" in data:
+            last_name = data["last-name"]
+            _LOGGER.debug("new last-name: " + str(last_name))
+
+        if "about" in data:
+            about = data["about"]
+            _LOGGER.debug("new about: " + str(about))
+
+        if "password" in data:
+            _LOGGER.debug("new password: " + str(data["password"]))
+
+        user = await frontend.core_client.user_info()
 
         _LOGGER.debug("user: " + str(user))
 
-        user_id = user["id"]
+        user_id = user.id
         update_url = "/api/user/" + str(user_id)
 
         raw_data = '{"firstname": "' + str(first_name) + '", "lastname": "Administrator"}'
         _LOGGER.debug("payload: " + str(raw_data))
         _LOGGER.debug("payload: " + str(type(raw_data)))
 
-        _LOGGER.debug("access_token: " + str(frontend.oauth_client.access_token))
+        # TODO: patch user
 
-        await frontend.oauth_client.request(
-            method="PATCH",
-            url=update_url,
-            headers={"Content-Type": "application/x-www-form-urlencoded"},
-            data=raw_data,
-        )
+        # await frontend.core_client.patch_user(
+        #     method="PATCH",
+        #     url=update_url,
+        #     headers={"Content-Type": "application/x-www-form-urlencoded"},
+        #     data=raw_data,
+        # )
 
         raise web.HTTPFound(location="/user")
