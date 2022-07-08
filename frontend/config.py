@@ -19,7 +19,7 @@ class Config:
         client_secret: str | None = None,
         redirect_uri: str | None = None,
         cookie_name: str = "Photos.network",
-        cookie_secret: str = "Thirty  two  length  bytes  key!",
+        cookie_secret: str = "",
     ) -> None:
         self.frontend_url: Optional[str] = frontend_url
         self.frontend_port: int = frontend_port

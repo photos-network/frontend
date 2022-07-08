@@ -1,6 +1,6 @@
 FROM python:3.10
 LABEL "description"="Photos.network web frontend"
-LABEL "version"="0.1.0"
+LABEL "version"="0.2.0"
 LABEL "maintainer"="github.com/photos-network"
 
 WORKDIR /app

@@ -1,4 +1,5 @@
 import gettext
+import importlib.resources as importlib_resources
 import os
 import sys
 import threading
@@ -7,7 +8,8 @@ from jinja2 import pass_context
 from jinja2.ext import InternationalizationExtension
 from markupsafe import Markup
 
-localedir = os.path.join("locales")
+pkg = importlib_resources.files("frontend")
+localedir = os.path.join(pkg / "locales")
 domain = "messages"
 threadLocalData = threading.local()
 threadLocalData.locale = "en_US"

@@ -1,5 +1,4 @@
 python-i18n>=0.3.9
-aiohttp-devtools>=1.0
 aiohttp-jinja2>=1.4.2
 aiohttp_session>=2.11.0
 aioauth-client>=0.27.0

@@ -15,6 +15,10 @@ Its core features are:
 
 This repository contains the official App-like web frontend.
 
+Its containing
+- a grid of the users photos
+- the users profile
+
 ## Development
 
 ### Visual Studio Code
@@ -28,5 +32,16 @@ The fastest start into development can be archived by using [Visual Studio Code]
 
 
 
-## Testing
-Pytest
+
+---
+
+## Release
+Update the version in `frontend/const.py` and `Dockerfile` before creating a new image.
+
+To support multiple architectures, we need to create and use or own builder.
+```shell
+docker buildx create --name multiarchitecturebuilder
+docker buildx use multiarchitecturebuilder
+docker buildx build --platform linux/arm64,linux/amd64 --tag photosnetwork/frontend:latest --push .
+```                            
+

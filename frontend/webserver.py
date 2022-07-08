@@ -1,3 +1,4 @@
+import importlib.resources as importlib_resources
 import logging
 import os
 import time
@@ -55,9 +56,10 @@ class Webserver:
         )
 
         # init jinja2 template engine
+        pkg = importlib_resources.files("frontend")
         env = aiohttp_jinja2.setup(
             self.app,
-            loader=jinja2.FileSystemLoader("frontend/templates"),
+            loader=jinja2.FileSystemLoader(pkg / "templates"),
             extensions=["jinja2.ext.i18n", "jinja2.ext.debug"],
             context_processors=[self.username_ctx_processor],
         )
@@ -73,7 +75,7 @@ class Webserver:
         self.register_request(UserView())
         self.register_request(SettingsView())
 
-        self.app.router.add_static("/static", os.path.join(os.getcwd(), "frontend/static"))
+        # self.app.router.add_static("/static", os.path.join("frontend/static"))
 
         self.app.middlewares.append(self.auth_middleware)
 

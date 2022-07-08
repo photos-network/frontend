@@ -40,18 +40,10 @@ def create_application(
 
     aiohttp_session.setup(app, EncryptedCookieStorage(secret_key))
 
-    env = aiohttp_jinja2.setup(
-        app,
-        loader=jinja2.FileSystemLoader("frontend/views"),
-        extensions=["jinja2.ext.i18n", "jinja2.ext.debug"],
-        context_processors=[username_ctx_processor],
-    )
-    env.install_gettext_translations(i18n, newstyle=True)
 
     for route in routes.routes:
         app.router.add_route(*route[0], **route[1])
 
-    app.router.add_static("/static", os.path.join(os.getcwd(), "frontend/static"))
 
     for middleware in middlewares.middlewares:
         app.middlewares.append(middleware)
