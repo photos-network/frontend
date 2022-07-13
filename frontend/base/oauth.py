@@ -110,7 +110,7 @@ class CoreClient:
         url = str(self.config.core_url) + ":" + str(self.config.core_port) + "/api/oauth/token"
 
         raw_data = (
-            "grant_type=authorization_code"
+            "grant_type=refresh_token"
             + "&refresh_token="
             + str(self.refresh_token)
             + "&client_id="

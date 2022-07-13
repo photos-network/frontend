@@ -1,3 +1,7 @@
+## [0.2.1] - 2022-06-13
+### Fixed
+- token refresh call
+
 ## [0.2.0] - 2022-06-07
 ### Added
 - core client for internal communication
