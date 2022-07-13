@@ -2,7 +2,7 @@
 
 import sys
 
-from frontend import main
+from frontend.__main__ import main
 
 if __name__ == "__main__":
     sys.exit(main())

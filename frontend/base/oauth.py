@@ -141,7 +141,7 @@ class CoreClient:
     async def get_photos(self):
         async with aiohttp.ClientSession() as session:
             async with session.get(
-                url=str(self.config.core_url) + ":" + str(self.config.core_port) + "/api/photos?limit=10&offset=0",
+                url=str(self.config.core_url) + ":" + str(self.config.core_port) + "/api/photos",
                 headers={"Authorization": "Bearer " + str(self.accessToken)},
             ) as resp:
                 return await resp.json()
