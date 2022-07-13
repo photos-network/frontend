@@ -156,6 +156,8 @@ class Frontend:
         await self.http.start()
         _LOGGER.info("Webserver should be up and running...")
 
+        start_time = None
+        
         # iterate through pending tasks
         while self._pending_tasks:
             pending = [task for task in self._pending_tasks if not task.done()]
