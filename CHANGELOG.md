@@ -1,6 +1,12 @@
+## [0.2.2] - 2022-06-15
+### Fixed
+- persist refreshed token
+
+
 ## [0.2.1] - 2022-06-13
 ### Fixed
 - token refresh call
+
 
 ## [0.2.0] - 2022-06-07
 ### Added
@@ -9,9 +15,11 @@
 ### Changed
 - renamed configuration file to `frontend_configuration.json`
 
+
 ## [0.1.1] - 2022-05-08
 ### Added
 - gettext mo files
+
 
 ## [0.1.0] - 2022-04-30
 ### Added
@@ -19,6 +27,7 @@
 - draft of profile page
 
 
+[0.2.2]: https://github.com/photos-network/frontend/compare/Release/v0.2.1...Release/v0.2.2
 [0.2.1]: https://github.com/photos-network/frontend/compare/Release/v0.2.0...Release/v0.2.1
 [0.2.0]: https://github.com/photos-network/frontend/compare/Release/v0.1.0...Release/v0.2.0
 [0.1.1]: https://github.com/photos-network/frontend/compare/Release/v0.1.0...Release/v0.1.1
