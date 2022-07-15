@@ -1,9 +1,11 @@
 import asyncio
 import logging
+import time
 from dataclasses import dataclass
 from typing import Any, Dict
 
 import aiohttp
+import aiohttp_session
 from aiohttp import request, web
 from frontend.config import Config
 
@@ -104,39 +106,47 @@ class CoreClient:
                     response["lastname"],
                 )
 
-    async def refresh_token(self):
+    async def refresh_access_token_call(self):
         """refresh access token"""
 
         url = str(self.config.core_url) + ":" + str(self.config.core_port) + "/api/oauth/token"
 
-        raw_data = (
-            "grant_type=refresh_token"
-            + "&refresh_token="
-            + str(self.refresh_token)
-            + "&client_id="
-            + self.config.client_id
-            + "&scope="
-            + self.scope
-        )
+        if self.refreshToken is not None and self.scope is not None:
 
-        async with aiohttp.ClientSession() as session:
-            async with session.request(
-                method="POST",
-                url=url,
-                headers={"Content-Type": "application/x-www-form-urlencoded"},
-                data=raw_data,
-                ssl=None,
-                verify_ssl=False,
-            ) as resp:
-                response = await resp.json()
+            raw_data = (
+                "grant_type=refresh_token"
+                + "&refresh_token="
+                + str(self.refreshToken)
+                + "&client_id="
+                + self.config.client_id
+                + "&scope="
+                + self.scope
+            )
 
-                self.accessToken = response["access_token"]
-                self.refreshToken = response["refresh_token"]
-                self.expiresIn = response["expires_in"]
+            async with aiohttp.ClientSession() as clientSession:
+                async with clientSession.request(
+                    method="POST",
+                    url=url,
+                    headers={"Content-Type": "application/x-www-form-urlencoded"},
+                    data=raw_data,
+                    ssl=None,
+                    verify_ssl=False,
+                ) as resp:
+                    response = await resp.json()
 
-                await session.close()
+                    timestamp = time.time()
+                    expires_in = int(timestamp) + response["expires_in"]
 
-                return resp.status()
+                    self.accessToken = response["access_token"]
+                    self.refreshToken = response["refresh_token"]
+                    self.expiresIn = expires_in
+
+                    status = resp.status
+                    await clientSession.close()
+
+                    return (status, self.accessToken, self.refreshToken, self.expiresIn)
+        else:
+            return (None, None, None, None)
 
     async def get_photos(self):
         async with aiohttp.ClientSession() as session:

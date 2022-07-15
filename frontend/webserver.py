@@ -139,11 +139,26 @@ class Webserver:
 
             # refresh token if access_token expires in next 3 minutes or has been expired already
             if (expires_in - now) <= 180:
-                status_code = await self.frontend.core_client.refresh_token()
+                _LOGGER.info("access token is expiring in " + str((expires_in - now)) + " seconds. Try to refresh...")
 
-                _LOGGER.error("status: " + str(status_code))
+                (
+                    statusCode,
+                    accessToken,
+                    refreshToken,
+                    expiresIn,
+                ) = await self.frontend.core_client.refresh_access_token_call()
+                if statusCode is not None and statusCode == 200:
+                    session["expires_in"] = expiresIn
+                    session["access_token"] = str(accessToken)
+                    session["refresh_token"] = str(refreshToken)
 
-            authenticated = True
+                    authenticated = True
+                else:
+                    authenticated = False
+
+            else:
+                # still authenticated
+                authenticated = True
 
         validate_access_token_status = await self.frontend.core_client.check_access_token()
         if validate_access_token_status != 200:
