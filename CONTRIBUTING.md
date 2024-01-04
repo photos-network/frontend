@@ -82,3 +82,74 @@ Underneath it is using these frameworks:
 * [tower](https://github.com/tower-rs/tower) - for networking
 * [axum](https://github.com/tokio-rs/axum) - as web framework
 * [abi_stable](https://github.com/rodrimati1992/abi_stable_crates) - FFI for dynamic library loading
+
+
+## 🧪 Development
+
+The frontend is written in 🦀 [Rust](https://rust-lang.org/) using the 🚀 [Leptos](https://leptos.dev/) framework.
+
+It requires to install [cargo-leptos](https://github.com/leptos-rs/cargo-leptos) and the [tailwind css executable](https://github.com/tailwindlabs/tailwindcss/releases)
+
+#### 🏃 Running
+
+First the tailwind css needs to be created if modified
+```shell
+tailwindcss -i ./input.css -o ./style/output.css --watch
+```
+
+Next leptos needs to compile the application
+```shell
+cargo leptos watch
+```
+
+Open any browser at [http://127.0.0.1:7778](http://127.0.0.1:7778)
+
+
+
+#### 🔬 Testing
+
+```shell
+cargo leptos end-to-end
+```
+
+```shell
+cargo leptos end-to-end --release
+```
+Cargo-leptos uses Playwright as the end-to-end test tool.  
+Tests are located in end2end/tests directory.
+
+
+#### 📦 Release
+
+```shell
+cargo leptos build --release
+```
+
+1. The server binary located in `target/server/release`
+2. The `site` directory and all files within located in `target/site`
+
+Copy these files to your remote server. The directory structure should be:
+```text
+frontend
+site/
+```
+Set the following environment variables (updating for your project as needed):
+```text
+LEPTOS_OUTPUT_NAME="frontend"
+LEPTOS_SITE_ROOT="site"
+LEPTOS_SITE_PKG_DIR="pkg"
+LEPTOS_SITE_ADDR="127.0.0.1:3000"
+LEPTOS_RELOAD_PORT="3001"
+```
+
+
+## 🚀 Release
+
+To support multiple architectures, an own builder needs to be created.
+```shell
+docker buildx create --name multiarchitecturebuilder
+docker buildx use multiarchitecturebuilder
+docker buildx build --platform linux/arm64,linux/amd64 --tag photosnetwork/frontend:latest --push .
+```
+
+

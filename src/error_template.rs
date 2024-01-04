@@ -2,6 +2,8 @@ use cfg_if::cfg_if;
 use http::status::StatusCode;
 use leptos::*;
 use thiserror::Error;
+use crate::footer::Footer;
+use crate::header::Header;
 
 #[cfg(feature = "ssr")]
 use leptos_axum::ResponseOptions;
@@ -54,6 +56,8 @@ pub fn ErrorTemplate(
     }}
 
     view! {
+        <Header/>
+        <main class="ui main container mx-auto">
         <h1>{if errors.len() > 1 {"Errors"} else {"Error"}}</h1>
         <For
             // a function that returns the items we're iterating over; a signal is fine
@@ -70,5 +74,7 @@ pub fn ErrorTemplate(
                 }
             }
         />
+        </main>
+        <Footer/>
     }
 }

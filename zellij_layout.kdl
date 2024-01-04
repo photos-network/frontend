@@ -1,0 +1,17 @@
+layout {
+    pane {
+		command="hx ."
+		name="code"
+    }
+	pane split_direction="vertical" {
+        pane {
+            command="cargo leptos watch"
+            name="leptos"
+        }
+        pane {
+            command="tailwindcss -i ./input.css -o ./style/output.css --watch"
+            name="tailwind"
+        }
+    }
+}
+

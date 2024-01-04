@@ -1,6 +1,8 @@
 use cfg_if::cfg_if;
 pub mod app;
 pub mod error_template;
+pub mod footer;
+pub mod header;
 pub mod fileserv;
 
 cfg_if! { if #[cfg(feature = "hydrate")] {

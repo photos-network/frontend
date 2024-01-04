@@ -1,7 +1,15 @@
 [package]
 name = "frontend"
-version = "0.1.0"
+authors = ["Photos network developers <info@photos.network>"]
+description = "A privacy first **photo storage and sharing service** in the fediverse."
+version = "0.3.0"
+homepage = "https://photos.network/"
+documentation = "https://developers.photos.network/"
+repository = "https://github.com/photos-network/frontend"
+readme = "README.md"
+license = "AGPL-3.0"
 edition = "2021"
+
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -59,7 +67,7 @@ site-root = "target/site"
 site-pkg-dir = "pkg"
 
 # [Optional] The source CSS file. If it ends with .sass or .scss then it will be compiled by dart-sass into CSS. The CSS is optimized by Lightning CSS before being written to <site-root>/<site-pkg>/app.css
-style-file = "style/main.scss"
+style-file = "style/output.css"
 # Assets source dir. All files found here will be copied and synchronized to site-root.
 # The assets-dir cannot have a sub directory with the same name/path as site-pkg-dir.
 #
@@ -67,7 +75,7 @@ style-file = "style/main.scss"
 assets-dir = "public"
 
 # The IP and port (ex: 127.0.0.1:3000) where the server serves the content. Use it in your server setup.
-site-addr = "127.0.0.1:3000"
+site-addr = "127.0.0.1:7778"
 
 # The port to use for automatic reload monitoring
 reload-port = 3001

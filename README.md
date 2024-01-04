@@ -31,66 +31,6 @@ This is a free and open project and lives from contributions of the community.
 See our [Contribution Guide](CONTRIBUTING.md)
 
 
-## 🧪 Development
-
-The frontend is written in 🦀 [Rust](https://rust-lang.org/) using the [Leptos](https://leptos.dev/) framework.
-
-
-#### 🏃 Running
-
-```shell
-cargo leptos watch
-```
-
-
-#### 🔬 Testing
-
-```shell
-cargo leptos end-to-end
-```
-
-```shell
-cargo leptos end-to-end --release
-```
-
-Cargo-leptos uses Playwright as the end-to-end test tool.  
-Tests are located in end2end/tests directory.
-
-
-#### 📦 Release
-
-```shell
-cargo leptos build --release
-```
-
-1. The server binary located in `target/server/release`
-2. The `site` directory and all files within located in `target/site`
-
-Copy these files to your remote server. The directory structure should be:
-```text
-frontend
-site/
-```
-Set the following environment variables (updating for your project as needed):
-```text
-LEPTOS_OUTPUT_NAME="frontend"
-LEPTOS_SITE_ROOT="site"
-LEPTOS_SITE_PKG_DIR="pkg"
-LEPTOS_SITE_ADDR="127.0.0.1:3000"
-LEPTOS_RELOAD_PORT="3001"
-```
-
-
-## 🚀 Release
-
-To support multiple architectures, an own builder needs to be created.
-```shell
-docker buildx create --name multiarchitecturebuilder
-docker buildx use multiarchitecturebuilder
-docker buildx build --platform linux/arm64,linux/amd64 --tag photosnetwork/frontend:latest --push .
-```
-
-
 
 ## 🏛️ License
 
