@@ -2,46 +2,52 @@
 
 [![License](https://img.shields.io/github/license/photos-network/frontend)](./LICENSE.md)
 [![GitHub contributors](https://img.shields.io/github/contributors/photos-network/frontend?color=success)](https://github.com/photos.network/core/graphs/contributors)
-[![Discord](https://img.shields.io/discord/793235453871390720)](https://discord.gg/dGFDpmWp46)
 
 
-[Photos.network](https://photos.network) is an open source project for self hosted photo management.
+Photos.network](https://photos.network) is a free and open source, privacy first, self-hosted photo storage and sharing service for fediverse.
+
 Its core features are:
- - Share photos with friends, family or public
- - Filter / Search photos by attributes like location or date
- - Group photos by objects like people of objects
+- Share photos with friends, family or public
+- Filter / Search photos by attributes like location or date
+- Group photos by their content like people or objects
+- Upload photos and videos without resolution or quality constraints
+
 
 ## Frontend
 
-This repository contains the official App-like web frontend.
+This repository contains the official App-like web frontend. of the project.
 
-Its containing
-- a grid of the users photos
-- the users profile
+It is responsible for interacting with the core system via REST calls.
+- **Overview** of the users media items in a grid
+- **Albums** the users has access to
+- **Upload** new media items
+- **Details** of items like location, date and time taken.
 
-## Development
 
-### Visual Studio Code
-The fastest start into development can be archived by using [Visual Studio Code](https://code.visualstudio.com/) and [Docker](https://www.docker.com/get-started).
+## 🧩 Contribution
 
-1. Install [Docker](https://www.docker.com/get-started)
-2. Install [Visual Studio Code](https://code.visualstudio.com/)
-3. Install [Visual Studio Code Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
-4. Clone and Open this repository in Visual Studio Code
-5. Click the "Reopen in Container" Dialog
+This is a free and open project and lives from contributions of the community.
+
+See our [Contribution Guide](CONTRIBUTING.md)
 
 
 
+## 🏛️ License
 
----
+```
+Photos.network · A privacy first photo storage and sharing service for fediverse
+Copyright (C) 2020 Photos network developers
 
-## Release
-Update the version in `frontend/const.py` and `Dockerfile` before creating a new image.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
 
-To support multiple architectures, we need to create and use or own builder.
-```shell
-docker buildx create --name multiarchitecturebuilder
-docker buildx use multiarchitecturebuilder
-docker buildx build --platform linux/arm64,linux/amd64 --tag photosnetwork/frontend:latest --push .
-```                            
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+```
