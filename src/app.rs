@@ -4,6 +4,7 @@ use crate::header::Header;
 use leptos::*;
 use leptos_meta::*;
 use leptos_router::*;
+use serde::{Deserialize, Serialize};
 
 #[component]
 pub fn App() -> impl IntoView {
@@ -33,10 +34,35 @@ pub fn App() -> impl IntoView {
             <main>
                 <Routes>
                     <Route path="" view=HomePage/>
+                    <Route path="/login" view=LoginPage/>
                 </Routes>
             </main>
         </Router>
     }
+}
+
+#[server(Login, "/login")]
+pub async fn login(username: String) -> Result<(), ServerFnError> {
+  Err(ServerFnError::ServerError("not implemented".to_string()))
+}
+
+#[component]
+fn LoginPage() -> impl IntoView {
+  let login = create_server_multi_action::<Login>();
+  
+  view! {
+    <main class="ui main container mx-auto">
+      <h1>"Login"</h1>
+      <MultiActionForm action=login>
+        <label>
+          "Username"
+          <input type="text" name="username"/>
+        </label>
+        <input type="submit" value="Login"/>
+      </MultiActionForm>
+    </main>
+    <Footer/>
+  }
 }
 
 /// Renders the home page of your application.
