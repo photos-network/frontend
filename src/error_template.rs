@@ -1,9 +1,8 @@
-use cfg_if::cfg_if;
-use http::status::StatusCode;
-use leptos::*;
-use thiserror::Error;
 use crate::footer::Footer;
 use crate::header::Header;
+use http::StatusCode;
+use leptos::prelude::*;
+use thiserror::Error;
 
 #[cfg(feature = "ssr")]
 use leptos_axum::ResponseOptions;
@@ -22,15 +21,13 @@ impl AppError {
     }
 }
 
-// A basic function to display errors served by the error boundaries.
-// Feel free to do more complicated things here than just displaying the error.
 #[component]
 pub fn ErrorTemplate(
     #[prop(optional)] outside_errors: Option<Errors>,
     #[prop(optional)] errors: Option<RwSignal<Errors>>,
 ) -> impl IntoView {
     let errors = match outside_errors {
-        Some(e) => create_rw_signal(e),
+        Some(e) => RwSignal::new(e),
         None => match errors {
             Some(e) => e,
             None => panic!("No Errors found and we expected errors!"),
@@ -47,27 +44,24 @@ pub fn ErrorTemplate(
     println!("Errors: {errors:#?}");
 
     // Only the response code for the first error is actually sent from the server
-    // this may be customized by the specific application
-    cfg_if! { if #[cfg(feature="ssr")] {
+    #[cfg(feature = "ssr")]
+    {
         let response = use_context::<ResponseOptions>();
         if let Some(response) = response {
             response.set_status(errors[0].status_code());
         }
-    }}
+    }
 
     view! {
         <Header/>
         <main class="ui main container mx-auto">
         <h1>{if errors.len() > 1 {"Errors"} else {"Error"}}</h1>
         <For
-            // a function that returns the items we're iterating over; a signal is fine
-            each= move || {errors.clone().into_iter().enumerate()}
-            // a unique key for each item as a reference
+            each=move || {errors.clone().into_iter().enumerate()}
             key=|(index, _error)| *index
-            // renders each item to a view
             children=move |error| {
                 let error_string = error.1.to_string();
-                let error_code= error.1.status_code();
+                let error_code = error.1.status_code();
                 view! {
                     <h2>{error_code.to_string()}</h2>
                     <p>"Error: " {error_string}</p>

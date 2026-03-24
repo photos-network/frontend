@@ -1,7 +1,10 @@
-use leptos::*;
+use leptos::prelude::*;
+use crate::i18n::*;
 
 #[component]
 pub fn Footer() -> impl IntoView {
+    let i18n = use_i18n();
+
     view! {
               <footer class="bg-gray-100 text-gray-600 body-font">
         <div class="container flex mx-auto px-5 py-8 sm:flex-row flex-col items-center">
@@ -18,7 +21,7 @@ pub fn Footer() -> impl IntoView {
             <span class="ml-3 text-xl">Photos.network</span>
           </a>
           <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
-              A free and open source, privacy first, self-hosted photo storage and sharing service.
+              {t!(i18n, photos_network_description)}
           </p>
           <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
 
@@ -46,4 +49,3 @@ pub fn Footer() -> impl IntoView {
       </footer>
     }
 }
-

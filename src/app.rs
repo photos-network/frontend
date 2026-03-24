@@ -1,121 +1,122 @@
-use crate::error_template::{AppError, ErrorTemplate};
+use crate::auth::guards::{ProtectedLayout, ProtectedLayoutMulti};
+use crate::auth::{check_session_kind, SessionKind};
 use crate::footer::Footer;
 use crate::header::Header;
-use leptos::*;
-use leptos_meta::*;
-use leptos_router::*;
-use serde::{Deserialize, Serialize};
+use crate::pages::admin::AdminOverview;
+use crate::pages::album_detail::CustomerAlbumDetailPage;
+use crate::pages::dashboard::DashboardPage;
+use crate::pages::login::LoginForm;
+use crate::i18n::*;
+use leptos::prelude::*;
+use leptos_meta::{provide_meta_context, MetaTags, Stylesheet, Title};
+use leptos_router::{
+    components::{Route, Router, Routes},
+    hooks::use_navigate,
+    path,
+    StaticSegment,
+};
+
+pub fn shell(options: LeptosOptions) -> impl IntoView {
+    view! {
+        <!DOCTYPE html>
+        <html lang="en">
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <AutoReload options=options.clone() />
+                <HydrationScripts options/>
+                <MetaTags/>
+            </head>
+            <body>
+                <App/>
+            </body>
+        </html>
+    }
+}
 
 #[component]
 pub fn App() -> impl IntoView {
-    // Provides context that manages stylesheets, titles, meta tags, etc.
     provide_meta_context();
 
-    view! {
-        // injects a stylesheet into the document <head>
-        // id=leptos means cargo-leptos will hot-reload this stylesheet
-        <Stylesheet id="leptos" href="/pkg/frontend.css"/>
+    // Shared counter: bump it to force the session resource in Header to refetch.
+    let session_version = RwSignal::new(0u32);
+    provide_context(session_version);
 
-        // sets the document title
+    view! {
+        <Stylesheet id="leptos" href="/pkg/frontend.css"/>
         <Title text="Photos.network"/>
 
-        <Header/>
-
-
-        // content for this welcome page
-        <Router fallback=|| {
-            let mut outside_errors = Errors::default();
-            outside_errors.insert_with_default_key(AppError::NotFound);
-            view! {
-                <ErrorTemplate outside_errors/>
-            }
-            .into_view()
-        }>
+        <I18nContextProvider>
+        <Router>
+            <Header/>
             <main>
-                <Routes>
-                    <Route path="" view=HomePage/>
-                    <Route path="/login" view=LoginPage/>
+                <div class="container px-5 py-24 mx-auto">
+                <Routes fallback=NotFound>
+                    <Route path=StaticSegment("admin") view=move || view! {
+                        <ProtectedLayout required=SessionKind::Admin>
+                            <AdminOverview/>
+                        </ProtectedLayout>
+                    }/>
+                    <Route path=StaticSegment("") view=StartPage/>
+                    <Route path=StaticSegment("login") view=LoginForm/>
+                    <Route path=StaticSegment("dashboard") view=move || view! {
+                        <ProtectedLayoutMulti allowed=vec![SessionKind::Customer, SessionKind::Account, SessionKind::Admin]>
+                            <DashboardPage/>
+                        </ProtectedLayoutMulti>
+                    }/>
+                    <Route path=StaticSegment("albums") view=AlbumsRedirect/>
+                    <Route path=path!("/albums/:id") view=move || view! {
+                        <ProtectedLayoutMulti allowed=vec![SessionKind::Customer, SessionKind::Account, SessionKind::Admin]>
+                            <CustomerAlbumDetailPage/>
+                        </ProtectedLayoutMulti>
+                    }/>
                 </Routes>
+                </div>
             </main>
+            <Footer/>
         </Router>
+        </I18nContextProvider>
     }
 }
 
-#[server(Login, "/login")]
-pub async fn login(username: String) -> Result<(), ServerFnError> {
-  Err(ServerFnError::ServerError("not implemented".to_string()))
+
+#[component]
+fn StartPage() -> impl IntoView {
+    let navigate = use_navigate();
+    let session = Resource::new(|| (), |_| check_session_kind());
+
+    Effect::new(move |_| {
+        if let Some(Ok(kind)) = session.get() {
+            let path = match kind {
+                SessionKind::Admin => "/dashboard",
+                SessionKind::Account => "/dashboard",
+                SessionKind::Customer => "/dashboard",
+                SessionKind::None => "/login",
+            };
+            navigate(path, Default::default());
+        }
+    });
+
+    view! { <div/> }
+}
+
+
+/// Redirects `/albums` to `/dashboard` so old bookmarks keep working.
+#[component]
+fn AlbumsRedirect() -> impl IntoView {
+    let navigate = use_navigate();
+    Effect::new(move |_| {
+        navigate("/dashboard", Default::default());
+    });
+    view! { <div/> }
 }
 
 #[component]
-fn LoginPage() -> impl IntoView {
-  let login = create_server_multi_action::<Login>();
-  
-  view! {
-    <main class="ui main container mx-auto">
-      <h1>"Login"</h1>
-      <MultiActionForm action=login>
-        <label>
-          "Username"
-          <input type="text" name="username"/>
-        </label>
-        <input type="submit" value="Login"/>
-      </MultiActionForm>
-    </main>
-    <Footer/>
-  }
-}
-
-/// Renders the home page of your application.
-#[component]
-fn HomePage() -> impl IntoView {
-    // Creates a reactive value to update the button
-    let (count, set_count) = create_signal(0);
-    let on_click = move |_| set_count.update(|count| *count += 1);
-
+fn NotFound() -> impl IntoView {
+    let i18n = use_i18n();
     view! {
-          <main class="ui main container mx-auto">
-            <h1>"Photos.network"</h1>
-            <button 
-                class="bg-accent hover:bg-sky-700 px-5 py-3 text-white rounded-lg"
-                on:click=on_click
-            >"Click Me: " {count}</button>
-          </main>
-        <MobileApp/>
-        <Footer/>
-    }
-}
-
-#[component]
-fn MobileApp() -> impl IntoView {
-    view! {
-     <section class="text-gray-600 py-8 body-font">
-        <div class="container border border-gray-200 rounded-lg px-10 py-10 mx-auto flex items-center md:flex-row flex-col">
-          <div class="flex flex-col md:pr-10 md:mb-0 mb-6 pr-0 w-full md:w-auto md:text-left text-center">
-            <h2 class="text-xs text-accent tracking-widest font-medium title-font mb-1">NATIVE APP</h2>
-            <h1 class="md:text-3xl text-2xl font-medium title-font text-gray-900">Try our native mobile apps</h1>
-          </div>
-          <div class="flex md:ml-auto md:mr-0 mx-auto items-center flex-shrink-0 space-x-4">
-            <button onclick="window.open('https://play.google.com/store/apps/details?id=photos.network')" class="bg-gray-100 inline-flex py-3 px-5 rounded-lg items-center hover:bg-gray-200 focus:outline-none">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6" viewBox="0 0 512 512">
-                <path d="M99.617 8.057a50.191 50.191 0 00-38.815-6.713l230.932 230.933 74.846-74.846L99.617 8.057zM32.139 20.116c-6.441 8.563-10.148 19.077-10.148 30.199v411.358c0 11.123 3.708 21.636 10.148 30.199l235.877-235.877L32.139 20.116zM464.261 212.087l-67.266-37.637-81.544 81.544 81.548 81.548 67.273-37.64c16.117-9.03 25.738-25.442 25.738-43.908s-9.621-34.877-25.749-43.907zM291.733 279.711L60.815 510.629c3.786.891 7.639 1.371 11.492 1.371a50.275 50.275 0 0027.31-8.07l266.965-149.372-74.849-74.847z"></path>
-              </svg>
-              <span class="ml-4 flex items-start flex-col leading-none">
-                <span class="text-xs text-gray-600 mb-1">GET IT ON</span>
-                <span class="title-font font-medium">Google Play</span>
-              </span>
-            </button>
-            <button class="bg-gray-50 inline-flex py-3 px-5 rounded-lg items-center focus:outline-none">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6" viewBox="0 0 305 305">
-                <path d="M40.74 112.12c-25.79 44.74-9.4 112.65 19.12 153.82C74.09 286.52 88.5 305 108.24 305c.37 0 .74 0 1.13-.02 9.27-.37 15.97-3.23 22.45-5.99 7.27-3.1 14.8-6.3 26.6-6.3 11.22 0 18.39 3.1 25.31 6.1 6.83 2.95 13.87 6 24.26 5.81 22.23-.41 35.88-20.35 47.92-37.94a168.18 168.18 0 0021-43l.09-.28a2.5 2.5 0 00-1.33-3.06l-.18-.08c-3.92-1.6-38.26-16.84-38.62-58.36-.34-33.74 25.76-51.6 31-54.84l.24-.15a2.5 2.5 0 00.7-3.51c-18-26.37-45.62-30.34-56.73-30.82a50.04 50.04 0 00-4.95-.24c-13.06 0-25.56 4.93-35.61 8.9-6.94 2.73-12.93 5.09-17.06 5.09-4.64 0-10.67-2.4-17.65-5.16-9.33-3.7-19.9-7.9-31.1-7.9l-.79.01c-26.03.38-50.62 15.27-64.18 38.86z"></path>
-                <path d="M212.1 0c-15.76.64-34.67 10.35-45.97 23.58-9.6 11.13-19 29.68-16.52 48.38a2.5 2.5 0 002.29 2.17c1.06.08 2.15.12 3.23.12 15.41 0 32.04-8.52 43.4-22.25 11.94-14.5 17.99-33.1 16.16-49.77A2.52 2.52 0 00212.1 0z"></path>
-              </svg>
-              <span class="ml-4 flex items-start flex-col leading-none">
-                <span class="text-xs text-gray-600 mb-1">Download on the</span>
-                <span class="title-font font-medium">App Store</span>
-              </span>
-            </button>
-          </div>
-        </div>
-      </section>
+        <main class="ui main container mx-auto">
+            <h1>{t!(i18n, not_found)}</h1>
+        </main>
     }
 }
