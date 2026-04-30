@@ -1,5 +1,5 @@
 # Add a fallback to default owners
 *       @thebino
 
-# setup can be reviewed by the frontend team
-setup.py @photos-network/frontend-team
+# dependencies can be reviewed by the frontend team
+Cargo.toml @photos-network/frontend-team

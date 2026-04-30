@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+/* Tell Tailwind v4 where to scan for class names */
+@source "./src/**/*.rs";
+@source "./*.html";
+
+/* Custom design tokens (replaces theme.extend.colors in tailwind.config.js) */
+@theme {
+  --color-clifford: #da373d;
+  --color-accent: #706CF6;
+  --color-error: #F2BAB9;
+  --color-success: #D2ECAE;
+  --color-warn: #F9F4BC;
+  --color-neutral: #CEEFF4;
+}

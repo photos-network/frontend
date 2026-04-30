@@ -1,0 +1,91 @@
+[package]
+name = "frontend"
+authors = ["Photos network developers <info@photos.network>"]
+description = "A privacy first **photo storage and sharing service** in the fediverse."
+version = "0.3.0"
+homepage = "https://photos.network/"
+documentation = "https://developers.photos.network/"
+repository = "https://github.com/photos-network/frontend"
+readme = "README.md"
+license = "AGPL-3.0"
+edition = "2021"
+
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+anyhow = "1.0.72"
+axum = { version = "0.8", optional = true }
+console_error_panic_hook = { version = "0.1", optional = true }
+leptos = { version = "0.8" }
+leptos_axum = { version = "0.8", optional = true }
+leptos_meta = { version = "0.8" }
+leptos_router = { version = "0.8" }
+leptos_i18n = "0.6.1"
+serde = { version = "1", features = ["derive"] }
+thiserror = "2"
+tokio = { version = "1", features = ["rt-multi-thread"], optional = true }
+tracing = { version = "0.1", optional = true }
+wasm-bindgen = { version = "0.2", optional = true }
+http = "1"
+reqwest = { version = "0.12", features = ["json", "multipart", "stream"], optional = true }
+serde_json = "1"
+base64 = "0.22"
+server_fn = { version = "0.8", features = ["cbor"] }
+
+[build-dependencies]
+leptos_i18n_build = "0.6"
+
+[features]
+hydrate = [
+    "leptos/hydrate",
+    "dep:console_error_panic_hook",
+    "dep:wasm-bindgen",
+    "leptos_i18n/hydrate",
+    "leptos_i18n_build/hydrate",
+    "dep:tracing",
+
+]
+ssr = [
+    "dep:axum",
+    "dep:tokio",
+    "dep:leptos_axum",
+    "leptos/ssr",
+    "leptos_meta/ssr",
+    "leptos_router/ssr",
+    "leptos_i18n/axum",
+    "leptos_i18n_build/ssr",
+    "dep:tracing",
+    "dep:reqwest",
+]
+
+# Defines a size-optimized profile for the WASM bundle in release mode
+[profile.wasm-release]
+inherits = "release"
+opt-level = 'z'
+lto = true
+codegen-units = 1
+panic = "abort"
+
+[package.metadata.leptos]
+output-name = "frontend"
+site-root = "target/site"
+site-pkg-dir = "pkg"
+tailwind-input-file = "input.css"
+assets-dir = "public"
+site-addr = "127.0.0.1:7778"
+reload-port = 3001
+end2end-cmd = "npx playwright test"
+end2end-dir = "end2end"
+browserquery = "defaults"
+env = "DEV"
+bin-features = ["ssr"]
+bin-default-features = false
+lib-features = ["hydrate"]
+lib-default-features = false
+lib-profile-release = "wasm-release"
+
+[package.metadata.leptos-i18n]
+default = "de"
+locales = ["en", "de"]
